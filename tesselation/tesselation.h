@@ -4,10 +4,11 @@
 #include "tfigure.h"
 #include "tesselation_resource.h"
 
+#define appCreator             'TeAp'
 #define appFileCreator         'DCRP'
-#define appExgName             "_beam:tesselation.CST"
+#define appExgName             "tesselation.cst"
 #define appExgDescription      "Tesselation figure"
-#define appExgRegisterDataType "CST"
+#define appExgRegisterDataType "cst"
 #define appDatabaseName        "FigureDB"
 #define appDatabaseType        'Data'
 

@@ -91,13 +91,18 @@ static Boolean MainFormMenuHandler(EventPtr e)
 	handled = true;
 	break;
     case menuItemDelete:
-	if (DeleteFigure()) {
-	    FormPtr frm = FrmGetActiveForm();
-	    FigureListFill(frm);
-	    FrmDrawForm(frm);
-	}
-	handled = true;
-	break;
+      if (DeleteFigure()) {
+	FormPtr frm = FrmGetActiveForm();
+	FigureListFill(frm);
+	FrmDrawForm(frm);
+      }
+      handled = true;
+      break;
+    case menuItemBeam:
+      BeamCurrentFigure();
+      handled=true;
+      break;
+      
     case menuItemThanks:
 	FrmAlert(alertID_thanks);
 	handled = true;

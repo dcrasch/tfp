@@ -26,6 +26,7 @@ BEGIN
   BEGIN
     MENUITEM "Rename" ID menuItemRename "R"
     MENUITEM "Delete" ID menuItemDelete "D"
+    MENUITEM "Beam"   ID menuItemBeam   "B"
   END
 
   PULLDOWN "Help"

@@ -17,6 +17,7 @@
 
 #include <PalmOS.h>
 #include <PalmCompatibility.h>
+#include <ExgMgr.h>
 
 #include "tesselation.h"
 #include "tfrecord.h"
@@ -49,15 +50,11 @@ static Err StartApplication(void)
 
     //Register for notification. Unregistration only occurs when app is removed. If app is
     //installed on top of older one, rereg does not need to occur
-
-    if ((err =
-	 ExgRegisterData(appFileCreator, exgRegExtensionID,
-			 appExgRegisterDataType)) != errNone) {
-	if (err != dmErrResourceNotFound) {
-	    ErrAlert(err);
-	    return err;
-	}
-    }
+    // err=ExgRegisterData (appFileCreator, exgRegExtensionID,appExgRegisterDataType );
+    /*if (err != dmErrResourceNotFound) {
+      ErrAlert(err);
+      return err;
+      }*/
     FrmGotoForm(formMain);
     return 0;
 }
@@ -125,26 +122,30 @@ Boolean AppEventHandler(EventPtr event)
 UInt32 PilotMain(UInt16 cmd, MemPtr cmdPBP, UInt16 launchFlags)
 {
     Err err;
-    ExgAskParamPtr pExgAskParam;
 
     switch (cmd) {
     case sysAppLaunchCmdNormalLaunch:
+      ExgRegisterData(appCreator,exgRegExtensionID,
+		      appExgRegisterDataType);
 	err = StartApplication();
 	if (err)
 	    return err;
 	AppEventLoop();
 	StopApplication();
 	break;
-    case sysAppLaunchCmdExgAskUser:
-	pExgAskParam = (ExgAskParamPtr) cmdPBP;
-	pExgAskParam->result = exgAskOk;
+    case sysAppLaunchCmdSyncNotify:
+        ExgRegisterData(appCreator,exgRegExtensionID,
+			appExgRegisterDataType);
 	break;
+    case sysAppLaunchCmdExgAskUser:
+      ((ExgAskParamPtr) cmdPBP)->result = exgAskOk;
+      break;
     case sysAppLaunchCmdExgReceiveData:
 	// if our application is not active, we need to open the database
-	// the subcall flag is used to determine whether we are active.
-	err =
-	    TFigureReceive((ExgSocketPtr) cmdPBP,
-			   (launchFlags & sysAppLaunchFlagSubCall));
+       // the subcall flag is used to determine whether we are active.
+      err =TFigureReceive((ExgSocketPtr) cmdPBP,
+			  (launchFlags & sysAppLaunchFlagSubCall));
+      
 	break;
     default:
 	break;

@@ -1,4 +1,6 @@
 #include <PalmOS.h>
+#include <ExgMgr.h>
+
 #include "tfrecord.h"
 
 static DmOpenRef s_dbFig = 0;
@@ -371,9 +373,11 @@ void TFigurerecordBeam(UInt16 i)
 	if (!p)
 	    ErrFatalDisplay("Could not get handle");
 
-	MemSet(&exgSock, sizeof(ExgSocketType), 0);
+	MemSet(&exgSock, sizeof(exgSock), 0);
 	exgSock.description = appExgDescription;
 	exgSock.name = appExgName;
+	exgSock.target = appCreator;
+	//exgSock.localMode = 1; // DEBUG // shortcut . s is easier
 
 	err = ExgPut(&exgSock);
 	if (err == errNone)
@@ -391,7 +395,7 @@ Err TFigureReceive(ExgSocketPtr socketPtr, Boolean isAppActive)
 {
     Err err;
     UInt16 index;
-    ErrFatalDisplay("receive");
+    //ErrFatalDisplay("receive");
     err = ExgAccept(socketPtr);
     if (!isAppActive)
 	TFigureOpen();
@@ -405,7 +409,7 @@ Err TFigureReceive(ExgSocketPtr socketPtr, Boolean isAppActive)
 	DmOpenDatabaseInfo(s_dbFig, &socketPtr->goToParams.dbID, NULL,
 			   NULL, &socketPtr->goToParams.dbCardNo, NULL);
 	socketPtr->goToParams.recordNum = index;
-	socketPtr->goToCreator = appFileCreator;
+	socketPtr->goToCreator = appCreator;
     }
     if (!isAppActive)
 	TFigureClose();
