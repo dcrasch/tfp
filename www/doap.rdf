@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:doap="http://usefulinc.com/ns/doap#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:admin="http://webns.net/mvcb/" xml:lang="en">
+  <rdf:Description rdf:about="">
+    <admin:generatorAgent rdf:resource="http://doapy.bonjourlesmouettes.org/doap-a-matic"/>
+  </rdf:Description>
+  <doap:Project>
+    <doap:name>tessellation</doap:name>
+    <doap:shortname>tessellation</doap:shortname>
+    <doap:homepage rdf:resource="tesselation.sourceforge.net"/>
+    <doap:created>2001-08-22</doap:created>
+    <doap:description>Tessellation lets you create nice colorful tilings like Escher with 8 basic figures.</doap:description>
+    <doap:shortdesc>Create nice colorful tilings.</doap:shortdesc>
+    <doap:screenshots rdf:resource="http://tesselation.sourceforge.net/shotcolor.jpg"/>
+    <doap:programming-language>C</doap:programming-language>
+    <doap:os>Palm OS</doap:os>
+    <doap:license rdf:resource="http://usefulinc.com/doap/licenses/gpl"/>
+    <doap:repository>
+      <doap:CVSRepository>
+        <doap:anon-root>:pserver:anonymous@cvs.sourceforge.net:/cvsroot/tesselation</doap:anon-root>
+        <doap:module>tesselation</doap:module>
+        <doap:browse rdf:resource="http://cvs.sourceforge.net/viewcvs.py/tesselation/tesselation/"/>
+      </doap:CVSRepository>
+    </doap:repository>
+  </doap:Project>
+</rdf:RDF>
