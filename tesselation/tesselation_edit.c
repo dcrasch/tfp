@@ -77,15 +77,16 @@ static Boolean EditFormScreenHandler(EventPtr event)
 
 static void EditFormInit(FormPtr frm)
 {
-    if (my_figure)
-	TFigureFree(my_figure);
+  if (my_figure) {
+    TFigureFree(my_figure);
     my_figure = TFigurerecordGet(currentFigure);
     ErrFatalDisplayIf(!my_figure, "Could not get record");
-    //my_figure=NULL;
+
     theMouseDown = false;
     tesselateMode = false;
     if (my_figure)
 	TFigureRedraw(my_figure);
+  }
 }
 
 static void EditFormDone()
@@ -99,49 +100,46 @@ static Boolean EditFormMenuHandler(EventPtr event)
 {
     Boolean handled = false;
     switch (event->data.menu.itemID) {
-    case menuItemTesselate:{
-	    {
-		tesselateMode = true;
-		if (my_figure)
-		    TFigureTesselate(my_figure, true);
-		handled = true;
-		break;
-	    }
+    case menuItemTesselate:
+      
+      tesselateMode = true;
+      if (my_figure)
+	TFigureTesselate(my_figure, true);
+      handled = true;
+      break;
     case menuItemTesselateBW:
-	    {
-		tesselateMode = true;
-		if (my_figure)
-		    TFigureTesselate(my_figure, false);
-		handled = true;
-		break;
-	    }
+      tesselateMode = true;
+      if (my_figure)
+	TFigureTesselate(my_figure, false);
+      handled = true;
+      break;
+      
     case menuItemEdit:
-	    {
-		tesselateMode = false;
-		if (my_figure)
-		    TFigureRedraw(my_figure);
-		handled = true;
-		break;
-	    }
+      
+      tesselateMode = false;
+      if (my_figure)
+	TFigureRedraw(my_figure);
+      handled = true;
+      break;
+      
     case menuItemRemove:
-	    {
-		if (removePoint()) {
-		    TFigureRedraw(my_figure);
-		}
-		handled = true;
-		break;
-	    }
+      
+      if (removePoint()) {
+	TFigureRedraw(my_figure);
+      }
+      handled = true;
+      break;
+      
     case menuItemEDone:
-	    {
-		handled = true;
-		EditFormDone();
-		break;
-	    }
-
+      
+      handled = true;
+      EditFormDone();
+      break;
+      
     default:
-	    handled = false;
-	    break;
-	}
+      handled = false;
+      break;
+      
     }
     return handled;
 }
