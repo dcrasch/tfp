@@ -27,7 +27,7 @@ TVertexnode_type *TLineHit(TLinenode_type * l1, double x, double y,
 
 void TLineDraw(TLinenode_type l1, int x, int y, double scale);
 void TLineTesselate(TLinenode_type l1, int x, int y,
-		    double scale, double ca, double sa);
+		    double ca, double sa);
 
 void TLinenodeInsert(TLinenode_type * l1,
 		     double x1, double y1,

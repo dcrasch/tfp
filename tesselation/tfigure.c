@@ -81,8 +81,6 @@ void TFigureTesselate(TFigure_type * t1, int mode)
 	WinSetClip(&(drawRect));
 	WinEraseRectangle(&(drawRect), 0);
 
-	sx = 60;
-	sy = 60;
 	while (miny <= maxy) {
 	    sx = minx;
 	    sy = miny;
@@ -90,12 +88,12 @@ void TFigureTesselate(TFigure_type * t1, int mode)
 		rot = 0;
 		while (rot < TWO_PI) {
 		    TLinenode_type *l1 = t1->rootnode;
-		    ca = _cos(rot);
-		    sa = _sin(rot);
+		    ca = _cos(rot) * t1->scale;
+		    sa = _sin(rot) * t1->scale;
 		    while (l1 != NULL) {
 			// calculate fillcoord
 
-			TLineTesselate(*l1, sx, sy, t1->scale, ca, sa);
+			TLineTesselate(*l1, sx, sy, ca, sa);
 			l1 = l1->next;
 		    }
 		    rot += t1->rotinc;

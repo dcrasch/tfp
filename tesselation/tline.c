@@ -90,19 +90,16 @@ void TLineDraw(TLinenode_type l1, int x, int y, double scale)
 }
 
 void
-TLineTesselate(TLinenode_type l1, int x, int y, double scale, double ca,
-	       double sa)
+TLineTesselate(TLinenode_type l1, int x, int y, double ca, double sa)
 {
     TVertexnode_type *otv = l1.rootnode;
     int ox, oy;
     int nx, ny;
-    ox = (int) ((otv->p1.x * ca - otv->p1.y * sa) * scale + x);
-    oy = (int) ((otv->p1.x * sa + otv->p1.y * ca) * scale + y);
+    ox = (int) ((otv->p1.x * ca - otv->p1.y * sa) + x);
+    oy = (int) ((otv->p1.x * sa + otv->p1.y * ca) + y);
     while (otv->next != NULL) {
-	nx = (int) ((otv->next->p1.x * ca - otv->next->p1.y * sa) * scale +
-		    x);
-	ny = (int) ((otv->next->p1.x * sa + otv->next->p1.y * ca) * scale +
-		    y);
+	nx = (int) ((otv->next->p1.x * ca - otv->next->p1.y * sa) + x);
+	ny = (int) ((otv->next->p1.x * sa + otv->next->p1.y * ca) + y);
 	WinDrawLine(ox, oy, nx, ny);
 	ox = nx;
 	oy = ny;
