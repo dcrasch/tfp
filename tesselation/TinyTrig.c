@@ -35,29 +35,29 @@
 *****************************************************/
 static double ScaleNearZero(double x, double scale)
 {
-  double adjCntD, result;
-  UInt32 adjCnt;
+    double adjCntD, result;
+    UInt32 adjCnt;
 
-  // Get the number of scale increments in the input value.
+    // Get the number of scale increments in the input value.
 
-  adjCntD = scale;
-  adjCntD = x / adjCntD;
-  adjCntD = _abs(adjCntD);
-  adjCnt = (UInt32) adjCntD;
+    adjCntD = scale;
+    adjCntD = x / adjCntD;
+    adjCntD = _abs(adjCntD);
+    adjCnt = (UInt32) adjCntD;
 
-  // Adjust increment count for scale factor == PI
+    // Adjust increment count for scale factor == PI
 
-  if (scale == PI)
-    adjCnt = adjCnt * 2;
+    if (scale == PI)
+	adjCnt = adjCnt * 2;
 
-  // Adjust the input value accordingly.
+    // Adjust the input value accordingly.
 
-  if (x > 0.0)
-    result = x - (scale * (double) adjCnt);
-  else
-    result = x + (scale * (double) adjCnt);
+    if (x > 0.0)
+	result = x - (scale * (double) adjCnt);
+    else
+	result = x + (scale * (double) adjCnt);
 
-  return (result);
+    return (result);
 }
 
 /***********************************************************************
@@ -69,10 +69,10 @@ static double ScaleNearZero(double x, double scale)
  ***********************************************************************/
 double _abs(double x)
 {
-  if (x < 0.0)
-    return (-x);
-  else
-    return (x);
+    if (x < 0.0)
+	return (-x);
+    else
+	return (x);
 }
 
 /***********************************************************************
@@ -88,26 +88,26 @@ double _abs(double x)
  ***********************************************************************/
 double _sqrt(double x)
 {
-  double result = 0.0, prevResult, diff = 0.0;
+    double result = 0.0, prevResult, diff = 0.0;
 
-  // Eliminate negatives and small values outside the library range.  
+    // Eliminate negatives and small values outside the library range.  
 
-  if (x >= TT_MIN_VALUE) {
-    result = x;
+    if (x >= TT_MIN_VALUE) {
+	result = x;
 
-    // Calculate until two successive guesses are less than
-    // the library's minimum value. # iterations ranges from about
-    // 10 (for very small and very large #s) to about 5 for numbers
-    // close to zero.
+	// Calculate until two successive guesses are less than
+	// the library's minimum value. # iterations ranges from about
+	// 10 (for very small and very large #s) to about 5 for numbers
+	// close to zero.
 
-    do {
-      prevResult = result;
-      result = (result + (x / result)) / 2.0;
-      diff = _abs(prevResult - result);
+	do {
+	    prevResult = result;
+	    result = (result + (x / result)) / 2.0;
+	    diff = _abs(prevResult - result);
+	}
+	while (diff > TT_ACCURACY);
     }
-    while (diff > TT_ACCURACY);
-  }
-  return result;
+    return result;
 }
 
 /*****************************************************
@@ -121,51 +121,51 @@ double _sqrt(double x)
 *****************************************************/
 double _sin(double x)
 {
-  double result,
-      prevResult, numerator, denominator, term, sign, factorial, diff;
+    double result,
+	prevResult, numerator, denominator, term, sign, factorial, diff;
 
-  // Scale input angle to proper value between -2 PI and + 2 PI.
-  // The power series is not as accurate outside that range.
+    // Scale input angle to proper value between -2 PI and + 2 PI.
+    // The power series is not as accurate outside that range.
 
-  if ((x > TWO_PI) || (x < -TWO_PI))
-    x = ScaleNearZero(x, TWO_PI);
+    if ((x > TWO_PI) || (x < -TWO_PI))
+	x = ScaleNearZero(x, TWO_PI);
 
-  // initialize everything
+    // initialize everything
 
-  result = x;
-  numerator = x;
-  denominator = 1.0;
-  factorial = -1.0;
-  sign = 1.0;
+    result = x;
+    numerator = x;
+    denominator = 1.0;
+    factorial = -1.0;
+    sign = 1.0;
 
-  // Add the next term to the power series until within allowable
-  // limits.
+    // Add the next term to the power series until within allowable
+    // limits.
 
-  do {
+    do {
 
-    // prepare for next term calculation
+	// prepare for next term calculation
 
-    factorial = factorial + 2.0;
-    prevResult = result;
-    sign = sign * -1.0;
+	factorial = factorial + 2.0;
+	prevResult = result;
+	sign = sign * -1.0;
 
-    // calculate the next term
+	// calculate the next term
 
-    numerator = numerator * x * x;
-    denominator = denominator * (factorial + 1.0) * (factorial + 2.0);
-    term = numerator / denominator;
-    result = result + (sign * term);
+	numerator = numerator * x * x;
+	denominator = denominator * (factorial + 1.0) * (factorial + 2.0);
+	term = numerator / denominator;
+	result = result + (sign * term);
 
-    // Prep for termination check. Stop when the library's accuracy is 
-    // 
-    // 
-    // reached.
+	// Prep for termination check. Stop when the library's accuracy is 
+	// 
+	// 
+	// reached.
 
-    diff = _abs(_abs(prevResult) - _abs(result));
-  }
-  while (diff > TT_ACCURACY);
+	diff = _abs(_abs(prevResult) - _abs(result));
+    }
+    while (diff > TT_ACCURACY);
 
-  return result;
+    return result;
 }
 
 /*****************************************************
@@ -179,50 +179,50 @@ double _sin(double x)
 *****************************************************/
 double _cos(double x)
 {
-  double result,
-      prevResult, diff, numerator, denominator, term, sign, factorial;
+    double result,
+	prevResult, diff, numerator, denominator, term, sign, factorial;
 
-  // Scale input angle to proper value between -2 PI and + 2 PI.
-  // The power series is not as accurate outside that range.
+    // Scale input angle to proper value between -2 PI and + 2 PI.
+    // The power series is not as accurate outside that range.
 
-  if ((x > TWO_PI) || (x < -TWO_PI))
-    x = ScaleNearZero(x, TWO_PI);
+    if ((x > TWO_PI) || (x < -TWO_PI))
+	x = ScaleNearZero(x, TWO_PI);
 
-  // initialize everything
+    // initialize everything
 
-  result = 1.0;
-  prevResult = 1.0;
-  numerator = x * x;
-  denominator = 2.0;
-  factorial = 0.0;
-  sign = 1.0;
+    result = 1.0;
+    prevResult = 1.0;
+    numerator = x * x;
+    denominator = 2.0;
+    factorial = 0.0;
+    sign = 1.0;
 
-  do {
+    do {
 
-    // Prep for the next calculation
+	// Prep for the next calculation
 
-    prevResult = result;
-    sign = -sign;
-    factorial = factorial + 2.0;
+	prevResult = result;
+	sign = -sign;
+	factorial = factorial + 2.0;
 
-    // Calculate the next term
+	// Calculate the next term
 
-    term = numerator / denominator;
-    result = result + (sign * term);
+	term = numerator / denominator;
+	result = result + (sign * term);
 
-    // Prepare for next sequence thru loop
+	// Prepare for next sequence thru loop
 
-    numerator = numerator * x * x;
-    denominator = denominator * (factorial + 1.0) * (factorial + 2.0);
+	numerator = numerator * x * x;
+	denominator = denominator * (factorial + 1.0) * (factorial + 2.0);
 
-    // Check for loop termination. Stop when the library's accuracy is 
-    // 
-    // 
-    // reached.
+	// Check for loop termination. Stop when the library's accuracy is 
+	// 
+	// 
+	// reached.
 
-    diff = _abs(_abs(prevResult) - _abs(result));
-  }
-  while (diff > TT_ACCURACY);
+	diff = _abs(_abs(prevResult) - _abs(result));
+    }
+    while (diff > TT_ACCURACY);
 
-  return result;
+    return result;
 }

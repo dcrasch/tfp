@@ -3,10 +3,6 @@
 
 #include "tfigure.h"
 
-#define TABLES_FILE_CREATOR ('DCRP')
-#define TABLES_DB_TYPE      ('Data')
-#define TABLES_DB_NAME      ("FigureDB")
-
 #define INTSIZE    (sizeof(int))
 #define UINT16SIZE (sizeof(UInt16))
 #define DOUBLESIZE (sizeof(double))
@@ -40,4 +36,6 @@ TFigure_type *readFigure(MemHandle p, UInt32 * offset);
 UInt32 calculateLineSize(TLinenode_type * l1);
 UInt32 calculateFigureSize(TFigure_type * t1);
 
+Err TFigureReceive(ExgSocketPtr socketPtr);
+void TFigurerecordBeam(UInt16 i);
 #endif

@@ -1,5 +1,5 @@
 ICON "tesselation.pbm"
-VERSION "0.6.0"
+VERSION "0.7.0"
 
 FORM ID formMain AT (0 0 160 160)
 MENUID menuMain

@@ -4,12 +4,11 @@
 #include "tfigure.h"
 #include "tesselation_resource.h"
 
-/*
- * Database name of Tesselation 
- */ 
-// #define TSLN_NAME "Tesselation"
-// #define TSLN_MIMETYPE "application/x-tesselation"
-// #define TSLN_FILENAME "Tesselation.prc"
+#define appFileCreator 'DCRP'
+#define appExgName "_beam:tesselation.tsl"
+#define appExgRegisterDataType "TSL"
+#define appDatabaseName "FigureDB"
+#define appDatabaseType 'Data'
 
 // eventhandlers
 
