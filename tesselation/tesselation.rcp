@@ -1,0 +1,108 @@
+ICON "tesselation.pbm"
+VERSION "0.5.3"
+
+/* STRING gnuLicense FILE "license.txt" */
+
+FORM ID formMain AT (0 0 160 160)
+MENUID menuMain
+BEGIN
+    TITLE "Tesselation"
+    LIST "<EMPTY>" ID listFigure AT (0 15 160 121) FONT 0 VISIBLEITEMS 11
+    BUTTON "New" ID buttonNew AT (20 145 AUTO AUTO)
+    BUTTON "Edit" ID buttonEdit AT (PREVRIGHT+10 145 AUTO AUTO)
+    BUTTON "Delete" ID buttonDelete AT (PREVRIGHT+10 145 AUTO AUTO)
+END
+
+FORM ID formEdit AT (0 0 160 160)
+MENUID menuEdit
+BEGIN
+END
+
+FORM ID formTesselate AT (0 0 160 160)
+MENUID menuTesselate
+BEGIN
+END
+
+MENU ID menuMain
+BEGIN
+/*
+  PULLDOWN "Beam"
+  BEGIN
+    MENUITEM "Beam Figure" ID menuItemBeamFigure
+    MENUITEM "Beam Tesselation" ID menuItemBeamTesselation
+  END
+*/
+  PULLDOWN "Help"
+  BEGIN
+    MENUITEM "Thanks" ID menuItemThanks
+    MENUITEM "About" ID menuItemAbout
+  END
+END
+
+MENU ID menuEdit
+BEGIN  
+  PULLDOWN "Tesselation"
+  BEGIN
+    MENUITEM "Tesselate" ID menuItemTesselate
+    MENUITEM "Edit"      ID menuItemEdit
+    MENUITEM "Done" 	 ID menuItemEDone
+  END
+  PULLDOWN "Edit"
+  BEGIN
+    MENUITEM "Remove" ID menuItemRemove
+  END
+END
+
+FORM ID formAddFigure AT (2 93 156 65) 
+MODAL
+BEGIN
+  TITLE "Add Figure"
+  LABEL "Name:" AUTOID AT (5 14) FONT 0
+  FIELD ID fieldFigureName AT (PREVRIGHT+6 PREVTOP 70 11) FONT 0 UNDERLINED MAXCHARS 20
+  LABEL "Base:" AUTOID AT (5 PREVBOTTOM+1) FONT 0
+  POPUPTRIGGER "Square" triggerFigure AT (PREVRIGHT+6 PREVTOP AUTO AUTO) FONT 0 LEFTANCHOR
+  LIST "Square" "Square2" "Square90" "SquareN8" "Brick" "Diamond" "Triangle" listBaseFigures AT (PREVLEFT PREVTOP 75 44) FONT 0 NONUSABLE
+  POPUPLIST triggerFigure listBaseFigures
+  BUTTON "Ok" ID buttonAFOK AT (3 51 AUTO AUTO)
+  BUTTON "Cancel" ID buttonAFCancel AT (PREVRIGHT+5 PREVTOP AUTO AUTO)
+END
+
+ALERT ID alertID_about INFORMATION
+BEGIN
+  TITLE "About Tesselation"
+  MESSAGE "Copyright (c) 2000 David Rasch drasch@science.uva.nl GNU GPL http://gnu.org/copyleft/gnu.html"
+  BUTTONS "Done"
+END
+
+ALERT ID alertID_thanks 
+INFORMATION
+BEGIN
+  TITLE "Thanks"
+  MESSAGE "Thanks to Fred, Gerald, Stefan and Rene."
+  BUTTONS "Done"
+END
+
+ALERT ID alertID_delete
+CONFIRMATION
+BEGIN
+    TITLE "Delete Figure?"
+    MESSAGE "Are you sure you want to delete ^1"
+    BUTTONS "Yes" "No"
+END
+
+ALERT ID alertID_remove
+CONFIRMATION
+BEGIN
+    TITLE "Remove Points?"
+    MESSAGE "Are you sure you want to remove the two points?"
+    BUTTONS "Yes" "No"
+END
+
+ALERT ID alertID_selection
+INFORMATION
+BEGIN
+   TITLE "No point selected!"
+   MESSAGE "Click inside the square, after that select remove"
+   BUTTONS "OK"
+END  
+
