@@ -25,7 +25,7 @@ BUILDPRC = build-prc
 
 TARGET  = tesselation
 APPNAME = "Tessellation"
-APPID   = "TeAp"
+APPID   = "DCRP"
 RESDIR  = .
 
 SRC = tpoint.c tvertex.c tline.c tfigure.c tfill.c TinyTrig.c tfrecord.c tesselation.c tesselation_main.c tesselation_add.c tesselation_edit.c tesselation_util.c tesselation_rename.c

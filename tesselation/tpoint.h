@@ -58,14 +58,15 @@ void TPointDrawLine(TPoint_type p1, TPoint_type p2);
   \return a new point with x and y added to p1
 */
 TPoint_type TPointAddXY(TPoint_type p1, double x, double y);
+
 /*!
   \brief add p1 to p2
   \param p1 point
   \param p2 point
   \return the addition of p1 and p2
 */
-
 TPoint_type TPointAddPoint(TPoint_type p1, TPoint_type p2);
+
 /*!
   \brief the substract of p1 and p2
   \param p1 point
@@ -107,6 +108,7 @@ double TPointDistanceFromLine(TPoint_type p1, TPoint_type p2,
   \return the distance of p1 from p2
 */
 double TPointDistanceFromPoint(TPoint_type p1, TPoint_type p2);
+
 /*!
   \brief the distance of p1 from (x,y)
   \param p1 point
@@ -115,6 +117,7 @@ double TPointDistanceFromPoint(TPoint_type p1, TPoint_type p2);
   \return the distance of p1 from (x,y)
 */
 double TPointDistanceFromXY(TPoint_type p1, double x, double y);
+
 /*!
   \brief Calculates if a point (hx,hy) is is inside a square of ps size
   \param p1 middle point of square
