@@ -100,11 +100,9 @@ Boolean AppEventHandler(EventPtr event)
     return bHandled;
 }
 
-
 UInt32 PilotMain(UInt16 cmd, MemPtr cmdPBP, UInt16 launchFlags)
 {
     Err err;
-
 
     if (cmd == sysAppLaunchCmdNormalLaunch) {
 	err = StartApplication();

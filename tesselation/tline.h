@@ -20,13 +20,12 @@ TLinenode_type *TLinenodeCreateXY(double x1, double y1,
 
 void TLinenodeFree(TLinenode_type * l1);
 
-
 TVertexnode_type *TLineBreakAtXY(TLinenode_type * l1, double x, double y);
 TVertexnode_type *TLineHit(TLinenode_type * l1, double x, double y);
 
-void TLineDraw(TLinenode_type l1, int x, int y);
-void TLineTesselate(TLinenode_type l1, int x, int y, double scale,
-		    double ca, double sa);
+void TLineDraw(TLinenode_type l1, int x, int y, double scale);
+void TLineTesselate(TLinenode_type l1, int x, int y,
+		    double scale, double ca, double sa);
 
 void TLinenodeInsert(TLinenode_type * l1,
 		     double x1, double y1,
@@ -36,5 +35,8 @@ void TLinenodeInsert(TLinenode_type * l1,
 void TLinenodeAdd(TLinenode_type * rootnode, double x1, double y1,
 		  double x2, double y2, double x3, double y3, double x4,
 		  double y4, double rot);
+
+void TLineFit(TLinenode_type * rootnode, TPoint_type * pmax,
+	      TPoint_type * pmin);
 
 #endif

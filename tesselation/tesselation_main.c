@@ -119,8 +119,9 @@ void MainFormInit(FormPtr frm)
 static void FigureListFill(FormPtr frm)
 {
     int numFigures = TFigurerecordGetCount();
-    ListPtr list =
-	(ListPtr) FrmGetObjectPtr(frm, FrmGetObjectIndex(frm, listFigure));
+    ListPtr list = (ListPtr) FrmGetObjectPtr(frm,
+					     FrmGetObjectIndex(frm,
+							       listFigure));
 
     LstSetListChoices(list, NULL, numFigures);
     LstSetDrawFunction(list, (ListDrawDataFuncPtr) FigureListDrawFunc);

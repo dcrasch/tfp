@@ -30,6 +30,6 @@ double _sqrt(double x);		// Square root of x
 double _abs(double x);		// absolute value
 
 double _sin(double x);		// Sine of x using power series
-double _cos(double x);		// Cosine of x  
+double _cos(double x);		// Cosine of x 
 
 #endif

@@ -24,7 +24,6 @@
  * values. 
  */
 
-
 /*****************************************************
  * FUNCTION:       ScaleNearZero
  *
@@ -76,7 +75,6 @@ double _abs(double x)
 	return (x);
 }
 
-
 /***********************************************************************
  * FUNCTION:    	_sqrt
  *
@@ -111,7 +109,6 @@ double _sqrt(double x)
     }
     return result;
 }
-
 
 /*****************************************************
  * FUNCTION:    	_sin
@@ -160,6 +157,8 @@ double _sin(double x)
 	result = result + (sign * term);
 
 	// Prep for termination check. Stop when the library's accuracy is 
+	// 
+	// 
 	// reached.
 
 	diff = _abs(_abs(prevResult) - _abs(result));
@@ -168,7 +167,6 @@ double _sin(double x)
 
     return result;
 }
-
 
 /*****************************************************
  * FUNCTION:    	_cos
@@ -218,6 +216,8 @@ double _cos(double x)
 	denominator = denominator * (factorial + 1.0) * (factorial + 2.0);
 
 	// Check for loop termination. Stop when the library's accuracy is 
+	// 
+	// 
 	// reached.
 
 	diff = _abs(_abs(prevResult) - _abs(result));

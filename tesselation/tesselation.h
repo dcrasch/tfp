@@ -4,15 +4,16 @@
 #include "tfigure.h"
 #include "tesselation_resource.h"
 
-/* Database name of Tesselation */
-//#define TSLN_NAME         "Tesselation"
-//#define TSLN_MIMETYPE     "application/x-tesselation"
-//#define TSLN_FILENAME     "Tesselation.prc"
+/*
+ * Database name of Tesselation 
+ */
+// #define TSLN_NAME "Tesselation"
+// #define TSLN_MIMETYPE "application/x-tesselation"
+// #define TSLN_FILENAME "Tesselation.prc"
 
 // eventhandlers
 
 // mainform
-
 
 // extern TFigure_type *currentFigure;
 extern Boolean MainFormEventHandler(EventPtr e);

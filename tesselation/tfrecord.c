@@ -1,7 +1,6 @@
 #include <PalmOS.h>
 #include "tfrecord.h"
 
-
 static DmOpenRef s_dbFig = 0;
 static UInt16 s_recordNum = 0;
 
@@ -125,7 +124,6 @@ void TFigurerecordDelete(UInt16 i)
     DmRemoveRecord(s_dbFig, i);
 }
 
-
 void writePoint(TPoint_type p1, MemHandle p, UInt32 * offset)
 {
     DmWrite(p, (*offset), &p1, sizeof(TPoint_type));
@@ -164,7 +162,6 @@ void writeLine(TLinenode_type * l1, MemHandle p, UInt32 * offset)
 	v1 = v1->next;
 	counter++;
     }
-
 
     // write counter at the begin
     DmWrite(p, start, &counter, sizeof(UInt16));
@@ -236,7 +233,6 @@ double readDouble(MemHandle p, UInt32 * offset)
     (*offset) += sizeof(double);
     return *d1;
 }
-
 
 TPoint_type readPoint(MemHandle p, UInt32 * offset)
 {

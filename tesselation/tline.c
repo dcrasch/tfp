@@ -71,18 +71,18 @@ TVertexnode_type *TLineHit(TLinenode_type * l1, double x, double y)
     return NULL;
 }
 
-void TLineDraw(TLinenode_type l1, int x, int y)
+void TLineDraw(TLinenode_type l1, int x, int y, double scale)
 {
     TVertexnode_type *otv = l1.rootnode;
     TPoint_type pf, pt;
-    TPointDraw(TPointAddXY(otv->p1, x, y));
+    TPointDraw(TPointAddXY(TPointMul(otv->p1, scale), x, y));
     while (otv->next != NULL) {
-	pf = TPointAddXY(otv->p1, x, y);
-	pt = TPointAddXY(otv->next->p1, x, y);
+	pf = TPointAddXY(TPointMul(otv->p1, scale), x, y);
+	pt = TPointAddXY(TPointMul(otv->next->p1, scale), x, y);
 	TPointDraw(pt);
 	TPointDrawLine(pf, pt);
-	pf = TPointAddXY(otv->p2, x, y);
-	pt = TPointAddXY(otv->next->p2, x, y);
+	pf = TPointAddXY(TPointMul(otv->p2, scale), x, y);
+	pt = TPointAddXY(TPointMul(otv->next->p2, scale), x, y);
 	TPointDraw(pt);
 	TPointDrawLine(pf, pt);
 	otv = otv->next;
@@ -124,7 +124,6 @@ TLinenode_type *TLinenodeCreateXY(double x1, double y1,
     return l1;
 }
 
-
 void
 TLinenodeInsert(TLinenode_type * l1,
 		double x1, double y1,
@@ -149,7 +148,6 @@ TLinenodeAdd(TLinenode_type * rootnode,
     TLinenodeInsert(last, x1, y1, x2, y2, x3, y3, x4, y4, rot);
 }
 
-
 void TLinenodeFree(TLinenode_type * l1)
 {
     TVertexnode_type *v1 = l1->rootnode;
@@ -162,4 +160,39 @@ void TLinenodeFree(TLinenode_type * l1)
     l1->rootnode = NULL;
     l1->lastnode = NULL;
     MemPtrFree(l1);
+}
+
+void TLineFit(TLinenode_type * l1, TPoint_type * pmax, TPoint_type * pmin)
+{
+    TVertexnode_type *v1 = l1->rootnode;
+
+    while (v1) {
+
+	if (v1->p1.x > pmax->x)
+	    pmax->x = v1->p1.x;
+
+	if (v1->p1.y > pmax->y)
+	    pmax->y = v1->p1.y;
+
+	if (v1->p1.x < pmin->x)
+	    pmin->x = v1->p1.x;
+
+	if (v1->p1.y < pmin->y)
+	    pmin->y = v1->p1.y;
+
+	if (v1->p2.x > pmax->x)
+	    pmax->x = v1->p2.x;
+
+	if (v1->p2.y > pmax->y)
+	    pmax->y = v1->p2.y;
+
+	if (v1->p2.x < pmin->x)
+	    pmin->x = v1->p2.x;
+
+	if (v1->p2.y < pmin->y)
+	    pmin->y = v1->p2.y;
+
+	v1 = v1->next;
+    }
+
 }

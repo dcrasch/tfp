@@ -89,7 +89,7 @@ static void EditFormInit(FormPtr frm)
 
     theMouseDown = false;
     setTesselate(false);
-
+    TFigureFit(my_figure);
 
     if (my_figure) {
 	TFigureRedraw(my_figure);
@@ -120,7 +120,6 @@ static Boolean EditFormMenuHandler(EventPtr event)
     Boolean handled = false;
 
     switch (event->data.menu.itemID) {
-
 
     case menuItemTesselateBW:
 	setTesselate(true);
@@ -160,6 +159,13 @@ static Boolean EditFormMenuHandler(EventPtr event)
 	handled = true;
 	break;
 
+    case menuItemFit:
+	if (my_figure) {
+	    TFigureFit(my_figure);
+	    TFigureRedraw(my_figure);
+	}
+	handled = true;
+	break;
     case menuItemEDone:
 
 	handled = true;
@@ -182,7 +188,6 @@ void EditFormCleanUp()
 	my_figure = NULL;
     }
 }
-
 
 Boolean removePoint()
 {

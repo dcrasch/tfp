@@ -62,7 +62,6 @@ double TPointDistanceFromPoint(TPoint_type p1, TPoint_type p2)
     return _sqrt(sqr((p1.x - p2.x)) + sqr((p1.y - p2.y)));
 }
 
-
 Boolean TPointHitXY(TPoint_type p1, double hx, double hy)
 {
     return ((hx >= (p1.x - POINTSIZE)) && (hx <= (POINTSIZE + p1.x)) &&

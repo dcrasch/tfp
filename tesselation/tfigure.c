@@ -14,7 +14,6 @@ TFigure_type *TFigureCreate(double scale, int gridincx, int gridincy,
     t1->gridincx = gridincx;
     t1->gridincy = gridincy;
 
-
     t1->shiftx = shiftx;
     t1->shifty = shifty;
     if (rotinc == 0)
@@ -35,7 +34,6 @@ TFigure_type *TFigureCreate(double scale, int gridincx, int gridincy,
     return t1;
 }
 
-
 void TFigureDraw(TFigure_type * t1)
 {
     if (t1) {
@@ -43,15 +41,18 @@ void TFigureDraw(TFigure_type * t1)
 	WinPushDrawState();
 	WinSetClip(&(drawRect));
 	while (l1 != NULL) {
-	    TLineDraw(*l1, t1->offx, t1->offy);
+	    TLineDraw(*l1, t1->offx, t1->offy, t1->offscale);
 	    l1 = l1->next;
 	}
 
-	if (t1->selvertex) {
-	    WinSetForeColor(137);
-	    TPointDraw(TPointAddXY(t1->selvertex->p1, t1->offx, t1->offy));
-	    TPointDraw(TPointAddXY(t1->selvertex->p2, t1->offx, t1->offy));
-	}
+/* 		if (t1->selvertex) { */
+/* 			WinSetForeColor (137); */
+/* 			TPointDraw (TPointAddXY */
+/* 				    (t1->selvertex->p1, t1->offx, t1->offy)); */
+/* 			TPointDraw (TPointAddXY */
+/* 				    (t1->selvertex->p2, t1->offx, t1->offy)); */
+/* 		} */
+
 	WinResetClip();
 	WinPopDrawState();
     }
@@ -139,18 +140,18 @@ Boolean TFigureMouseDrag(TFigure_type * t1, int x, int y)
 	if ((pa.x == 0) && (pa.y == 0))
 	    return false;
 	if (t1->selline->corrp) {
-	    t1->selvertex->p1.x += (pa.x * t1->selline->ca +
-				    pa.y * t1->selline->sa);
-	    t1->selvertex->p1.y += (-pa.x * t1->selline->sa +
-				    pa.y * t1->selline->ca);
+	    t1->selvertex->p1.x +=
+		(pa.x * t1->selline->ca + pa.y * t1->selline->sa);
+	    t1->selvertex->p1.y +=
+		(-pa.x * t1->selline->sa + pa.y * t1->selline->ca);
 	    t1->selvertex->p2 = TPointAddPoint(t1->selvertex->p2, pa);
 	} else {
 	    t1->selvertex->p1 = TPointAddPoint(t1->selvertex->p1, pa);
 
-	    t1->selvertex->p2.x += (pa.x * t1->selline->ca -
-				    pa.y * t1->selline->sa);
-	    t1->selvertex->p2.y += (pa.x * t1->selline->sa +
-				    pa.y * t1->selline->ca);
+	    t1->selvertex->p2.x +=
+		(pa.x * t1->selline->ca - pa.y * t1->selline->sa);
+	    t1->selvertex->p2.y +=
+		(pa.x * t1->selline->sa + pa.y * t1->selline->ca);
 	}
 	t1->oldp.x = x;
 	t1->oldp.y = y;
@@ -158,7 +159,6 @@ Boolean TFigureMouseDrag(TFigure_type * t1, int x, int y)
     }
     return false;
 }
-
 
 void TFigureMouseUp(TFigure_type * t1)
 {
@@ -168,7 +168,6 @@ void TFigureMouseUp(TFigure_type * t1)
 	t1->selvertex = NULL;
     }
 }
-
 
 void TFigureRedraw(TFigure_type * t1)
 {
@@ -214,4 +213,27 @@ void TFigureFree(TFigure_type * t1)
 
 	MemPtrFree(t1);
     }
+}
+
+void TFigureFit(TFigure_type * t1)
+{
+    TLinenode_type *l1 = t1->rootnode;
+    TPoint_type pmax, pmin;
+    double width, height;
+
+    pmax = l1->rootnode->p1;
+    pmin = pmax;
+
+    TLineFit(l1, &pmax, &pmin);
+    while (l1->next) {
+	l1 = l1->next;
+	TLineFit(l1, &pmax, &pmin);
+    }
+
+    width = abs(pmax.x - pmin.x);
+    height = abs(pmax.y - pmin.y);
+
+    t1->offscale = 120.0 / (width > height ? width : height);
+    t1->offx = -pmin.x * t1->offscale + 20;
+    t1->offy = -pmin.y * t1->offscale + 20;
 }

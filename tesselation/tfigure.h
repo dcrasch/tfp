@@ -19,7 +19,9 @@ typedef struct tfigure_tag {
 
     int gridincx, gridincy;
     int shiftx, shifty;
+
     int offx, offy;
+    double offscale;
 
     char name[DESCSIZE];
 } TFigure_type;
@@ -38,5 +40,7 @@ void TFigureTesselate(TFigure_type * t1, int mode);
 Boolean TFigureMouseDown(TFigure_type * t1, int x, int y);
 Boolean TFigureMouseDrag(TFigure_type * t1, int x, int y);
 void TFigureMouseUp(TFigure_type * t1);
+
+void TFigureFit(TFigure_type * t1);
 
 #endif
