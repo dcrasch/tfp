@@ -43,7 +43,8 @@ MENU ID menuEdit
 BEGIN  
   PULLDOWN "Tesselation"
   BEGIN
-    MENUITEM "Tesselate" ID menuItemTesselate
+    MENUITEM "Color"	 ID menuItemTesselate
+    MENUITEM "B/W"	 ID menuItemTesselateBW
     MENUITEM "Edit"      ID menuItemEdit
     MENUITEM "Done" 	 ID menuItemEDone
   END
@@ -53,7 +54,7 @@ BEGIN
   END
 END
 
-FORM ID formAddFigure AT (2 93 156 65) 
+FORM ID formAddFigure AT (2 73 156 65) 
 MODAL
 BEGIN
   TITLE "Add Figure"
@@ -78,7 +79,7 @@ ALERT ID alertID_thanks
 INFORMATION
 BEGIN
   TITLE "Thanks"
-  MESSAGE "Thanks to Fred, Gerald, Stefan and Rene."
+  MESSAGE "Thanks to Fred, Gerald, Stefan, Bas and Rene."
   BUTTONS "Done"
 END
 

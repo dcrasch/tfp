@@ -57,7 +57,7 @@ void TFigureDraw(TFigure_type * t1)
     }
 }
 
-void TFigureTesselate(TFigure_type * t1)
+void TFigureTesselate(TFigure_type * t1, Boolean color)
 {
     if (t1) {
 	double rot;
@@ -100,9 +100,9 @@ void TFigureTesselate(TFigure_type * t1)
 		maxy -= t1->scale * t1->shifty;
 	    }
 	}
-#ifdef __TFILL_H__
-	TFigureFill(t1);
-#endif
+	if (color == true) {
+	    TFigureFill(t1);
+	}
 	WinResetClip();
 	WinPopDrawState();
     }
