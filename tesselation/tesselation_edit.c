@@ -14,6 +14,7 @@ static void EditFormDone();
 static void EditFormCleanUp();
 
 static Boolean removePoint();
+static void setTesselate(Boolean m);
 
 Boolean EditFormEventHandler(EventPtr event)
 {
@@ -31,6 +32,7 @@ Boolean EditFormEventHandler(EventPtr event)
 	break;
 
     case menuEvent:
+
 	handled = EditFormMenuHandler(event);
 	break;
     default:
@@ -86,7 +88,9 @@ static void EditFormInit(FormPtr frm)
     ErrFatalDisplayIf(!my_figure, "Could not open figure");
 
     theMouseDown = false;
-    tesselateMode = false;
+    setTesselate(false);
+
+
     if (my_figure) {
 	TFigureRedraw(my_figure);
     }
@@ -99,36 +103,50 @@ static void EditFormDone()
     FrmGotoForm(formMain);
 }
 
+static void setTesselate(Boolean m)
+{
+    FormPtr frm = FrmGetActiveForm();
+    tesselateMode = m;
+
+    if (tesselateMode) {
+	FrmSetMenu(frm, menuTesselate);
+    } else {
+	FrmSetMenu(frm, menuEdit);
+    }
+}
+
 static Boolean EditFormMenuHandler(EventPtr event)
 {
     Boolean handled = false;
+
     switch (event->data.menu.itemID) {
 
 
     case menuItemTesselateBW:
-	tesselateMode = true;
+	setTesselate(true);
 	if (my_figure)
+
 	    TFigureTesselate(my_figure, 0);
 	handled = true;
 	break;
 
     case menuItemTesselateGray:
-	tesselateMode = true;
+	setTesselate(true);
 	if (my_figure)
 	    TFigureTesselate(my_figure, 1);
 	handled = true;
 	break;
 
     case menuItemTesselate:
-	tesselateMode = true;
+	setTesselate(true);
 	if (my_figure)
-	    TFigureTesselate(my_figure,2);
+	    TFigureTesselate(my_figure, 2);
 	handled = true;
 	break;
 
     case menuItemEdit:
 
-	tesselateMode = false;
+	setTesselate(false);
 	if (my_figure)
 	    TFigureRedraw(my_figure);
 	handled = true;

@@ -59,27 +59,38 @@ static void recfill(int x1, int x2, int y, int d)
  * 
  */
 
-void TFigureFill(TFigure_type * t1,int mode)
+void TFigureFill(TFigure_type * t1, int mode)
 {
     int lx, rx, y;
-    if (mode!=0) {
-      for (y = 0; y < 160; y++) {
-	rx = 0;
-	while (rx < 160) {
-	  if (isWhite(rx, y)) {
-	    lx = rx;
-	    rx = scanright(rx, y);	// skip right 
-	    if (mode==1) {
-	      WinSetForeColor(SysRandom(0)%10+215);
+    UInt32 depth;
+    WinScreenMode(winScreenModeGet, 0, 0, &depth, 0);
+
+    if ((mode != 0) && (depth > 1)) {
+	for (y = 0; y < 160; y++) {
+	    rx = 0;
+	    while (rx < 160) {
+		if (isWhite(rx, y)) {
+		    lx = rx;
+		    rx = scanright(rx, y);	// skip right 
+		    if (mode == 1) {
+			if (depth >= 8) {
+			    WinSetForeColor(SysRandom(0) % 11 + 215);
+			}
+			if (depth == 4) {
+			    WinSetForeColor(SysRandom(0) % 14 + 1);
+			}
+			if (depth == 2) {
+			    WinSetForeColor(SysRandom(0) % 2 + 1);
+			}
+		    }
+
+		    if (mode == 2) {
+			WinSetForeColor(SysRandom(0) % 200 + 1);
+		    }
+		    recfill(lx, rx, y, 1);
+		}
+		rx++;
 	    }
-	    
-	    if (mode==2) {
-	      WinSetForeColor(SysRandom(0)%220+1);
-	    }
-	    recfill(lx, rx, y, 1);
-	  }
-	  rx++;
 	}
-      }
     }
 }

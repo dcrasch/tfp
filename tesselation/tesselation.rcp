@@ -57,6 +57,20 @@ BEGIN
   END
 END
 
+MENU ID menuTesselate
+BEGIN  
+  PULLDOWN "Tesselation"
+  BEGIN
+  MENUITEM "B/W"	 ID menuItemTesselateBW
+  MENUITEM "Gray"      	 ID menuItemTesselateGray	
+  MENUITEM "Color"	 ID menuItemTesselate
+    
+  
+    MENUITEM "Edit"      ID menuItemEdit
+    MENUITEM "Done" 	 ID menuItemEDone
+  END
+
+END
 FORM ID formAddFigure AT (2 88 156 70) 
 MODAL
 BEGIN

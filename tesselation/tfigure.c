@@ -100,7 +100,7 @@ void TFigureTesselate(TFigure_type * t1, int mode)
 		maxy -= t1->scale * t1->shifty;
 	    }
 	}
-	TFigureFill(t1,mode);
+	TFigureFill(t1, mode);
 	WinResetClip();
 	WinPopDrawState();
     }

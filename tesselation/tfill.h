@@ -4,6 +4,6 @@
 #include <PalmOS.h>
 #include "tfigure.h"
 
-void TFigureFill(TFigure_type * t1,int mode);
+void TFigureFill(TFigure_type * t1, int mode);
 
 #endif
