@@ -47,7 +47,7 @@ You should look in the Makefile to make sure the program names and paths are ok.
 You should now have tesselation.prc.
 
 If you're messing with the source, then maybe you want to help.  If you have
-any problems, feel free to email me at drasch@user.sourceforge.net .  
+any problems, feel free to email me at drasch@users.sourceforge.net .  
 Also, if you plan to do anything with Tessellation, be it coding, 
 translations, or whatever, please use the latest (CVS) copy.  
 It can be found on:  http://sourceforge.net/projects/tesselation/
