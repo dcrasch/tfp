@@ -112,8 +112,10 @@ static Boolean MainFormButtonHandler(FormPtr frm, EventPtr event)
 
 void MainFormInit(FormPtr frm)
 {
-    FigureListFill(frm);
+
     FrmDrawForm(frm);
+    FigureListFill(frm);
+
 }
 
 static void FigureListFill(FormPtr frm)
@@ -131,7 +133,7 @@ static void FigureListFill(FormPtr frm)
 static void
 FigureListDrawFunc(UInt16 itemNum, RectanglePtr bounds, Char * data[])
 {
-    char currFigure[20];
+    char currFigure[DESCSIZE];
     TFigurerecordGetName(itemNum, currFigure);
     WinDrawChars(currFigure, StrLen(currFigure), bounds->topLeft.x + 6,
 		 bounds->topLeft.y);
@@ -142,7 +144,7 @@ static Boolean DeleteFigure(void)
     UInt16 choice;
     int numFigures = TFigurerecordGetCount();
     if (currentFigure < numFigures) {
-	char currFigure[20];
+	char currFigure[DESCSIZE];
 	TFigurerecordGetName(currentFigure, currFigure);
 	choice = FrmCustomAlert(alertID_delete, currFigure, NULL, NULL);
 	if (choice == 0) {

@@ -1,7 +1,7 @@
 ## Makefile for Tesselation
 
 CC	 = m68k-palmos-gcc
-CFLAGS	 = -Wall -O2 -pipe
+CFLAGS	 = -Wall -O2 -pipe -g
 PILRC	 = pilrc
 OBJRES	 = m68k-palmos-obj-res
 NM	 = m68k-palmos-nm
@@ -10,7 +10,7 @@ BUILDPRC = build-prc
 TARGET  = tesselation
 APPNAME = "Tesselation"
 APPID   = "TeAp"
-VERSION = 0.5.1
+VERSION = 0.5.3
 RESDIR  = .
 
 SRC = tpoint.c tvertex.c tline.c tfigure.c tfill.c TinyTrig.c tfrecord.c tesselation.c tesselation_main.c tesselation_add.c tesselation_edit.c tesselation_util.c

@@ -5,7 +5,7 @@
 
 static Boolean theMouseDown = false;
 static int tesselateMode = false;
-static TFigure_type *my_figure;
+static TFigure_type *my_figure = NULL;
 
 static Boolean EditFormMenuHandler(EventPtr event);
 static Boolean EditFormScreenHandler(EventPtr event);
@@ -25,6 +25,15 @@ Boolean EditFormEventHandler(EventPtr event)
 	    FrmDrawForm(frm);
 	    EditFormInit(frm);
 
+	    handled = true;
+	    break;
+	}
+    case frmCloseEvent:
+	{
+	    if (my_figure) {
+		TFigureFree(my_figure);
+		my_figure = NULL;
+	    }
 	    handled = true;
 	    break;
 	}
@@ -89,8 +98,6 @@ static void EditFormInit(FormPtr frm)
 static void EditFormDone()
 {
     TFigurerecordChange(currentFigure, my_figure);
-    TFigureFree(my_figure);
-    my_figure = 0;
     FrmGotoForm(formMain);
 }
 

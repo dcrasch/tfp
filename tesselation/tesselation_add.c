@@ -64,20 +64,24 @@ Boolean DoAddFigure(void)
 	}
 
 	titleptr = FldGetTextPtr(field);
+
 	if (titleptr) {
-	    StrNCopy(t1->name, titleptr, 19);
-	    t1->name[19] = 0;
+	    StrNCopy(t1->name, titleptr, DESCSIZE);
+	    t1->name[DESCSIZE - 1] = 0;
 	}
 
 	TFigurerecordNew(t1);
+
 	TFigureFree(t1);
 	if (prevFrm)
 	    FrmSetActiveForm(prevFrm);
+	FrmDeleteForm(frm);
 	return true;
     }
 
     if (prevFrm)
 	FrmSetActiveForm(prevFrm);
+    FrmDeleteForm(frm);
     return false;
 }
 

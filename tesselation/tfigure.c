@@ -30,8 +30,8 @@ TFigure_type *TFigureCreate(double scale, int gridincx, int gridincy,
     t1->offx = offx;
     t1->offy = offy;
 
-    StrNCopy(t1->name, name, 19);
-    t1->name[19] = 0;
+    StrNCopy(t1->name, name, DESCSIZE);
+    t1->name[DESCSIZE - 1] = 0;
     return t1;
 }
 
@@ -189,10 +189,11 @@ void TFigureRemovePoint(TFigure_type * t1)
 
 void TFigureFree(TFigure_type * t1)
 {
-    TLinenode_type *l1 = t1->rootnode;
+    TLinenode_type *l1;
     TLinenode_type *next = NULL;
-    while (l1 != NULL) {
 
+    l1 = t1->rootnode;
+    while (l1 != NULL) {
 	next = l1->next;
 	TLinenodeFree(l1);
 	l1 = next;

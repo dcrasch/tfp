@@ -17,6 +17,7 @@
 // extern TFigure_type *currentFigure;
 extern Boolean MainFormEventHandler(EventPtr e);
 extern Boolean EditFormEventHandler(EventPtr e);
+
 extern UInt16 currentFigure;
 extern RectangleType drawRect;
 
