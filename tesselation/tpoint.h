@@ -6,8 +6,8 @@
 #define POINTSIZE 4
 
 typedef struct tpoint_tag {
-    double x;
-    double y;
+  double x;
+  double y;
 } TPoint_type;
 
 void TPointDraw(TPoint_type p1);

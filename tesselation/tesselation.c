@@ -33,11 +33,11 @@ RectangleType drawRect = { {0, 0}, {160, 160} };
  */
 static Err StartApplication(void)
 {
-    // ReadPrefs();
-    TFigureOpen();
+  // ReadPrefs();
+  TFigureOpen();
 
-    FrmGotoForm(formMain);
-    return 0;
+  FrmGotoForm(formMain);
+  return 0;
 }
 
 /*
@@ -45,106 +45,106 @@ static Err StartApplication(void)
  */
 static void StopApplication(void)
 {
-    TFigureClose();
-    // WritePrefs();
-    FrmSaveAllForms();
-    FrmCloseAllForms();
+  TFigureClose();
+  // WritePrefs();
+  FrmSaveAllForms();
+  FrmCloseAllForms();
 
 }
 
 void AppLoadForm(UInt16 wFormID)
 {
-    FormPtr frm = FrmInitForm(wFormID);
-    FrmSetActiveForm(frm);
+  FormPtr frm = FrmInitForm(wFormID);
+  FrmSetActiveForm(frm);
 
-    // Set the event handler for the form.
-    // The handler of the currently active form is called by
-    // FrmHandleEvent each time it receives an event.
-    switch (wFormID) {
-    case formMain:
-	{
-	    FrmSetEventHandler(frm, MainFormEventHandler);
-	    break;
-	}
-    case formEdit:
-	{
-	    FrmSetEventHandler(frm, EditFormEventHandler);
-	    break;
-	}
-    default:
-	{
-	    break;
-	}
+  // Set the event handler for the form.
+  // The handler of the currently active form is called by
+  // FrmHandleEvent each time it receives an event.
+  switch (wFormID) {
+  case formMain:
+    {
+      FrmSetEventHandler(frm, MainFormEventHandler);
+      break;
     }
+  case formEdit:
+    {
+      FrmSetEventHandler(frm, EditFormEventHandler);
+      break;
+    }
+  default:
+    {
+      break;
+    }
+  }
 }
 
 Boolean AppEventHandler(EventPtr event)
 {
-    Boolean bHandled = false;
+  Boolean bHandled = false;
 
-    switch (event->eType) {
-    case frmLoadEvent:
-	{
-	    // Load the form resource.
+  switch (event->eType) {
+  case frmLoadEvent:
+    {
+      // Load the form resource.
 
-	    AppLoadForm(event->data.frmLoad.formID);
-	    bHandled = true;
-	    break;
-	}
-    default:
-	{
-	    bHandled = false;
-	    break;
-	}
+      AppLoadForm(event->data.frmLoad.formID);
+      bHandled = true;
+      break;
     }
-    return bHandled;
+  default:
+    {
+      bHandled = false;
+      break;
+    }
+  }
+  return bHandled;
 }
 
 UInt32 PilotMain(UInt16 cmd, MemPtr cmdPBP, UInt16 launchFlags)
 {
-    Err err;
+  Err err;
 
-    if (cmd == sysAppLaunchCmdNormalLaunch) {
-	err = StartApplication();
-	if (err)
-	    return err;
+  if (cmd == sysAppLaunchCmdNormalLaunch) {
+    err = StartApplication();
+    if (err)
+      return err;
 
-	AppEventLoop();
-	StopApplication();
+    AppEventLoop();
+    StopApplication();
 
-    } else {
-	return sysErrParamErr;
-    }
+  } else {
+    return sysErrParamErr;
+  }
 
-    return 0;
+  return 0;
 }
 
 void AppEventLoop(void)
 {
-    EventType event;
+  EventType event;
 
-    do {
-	EvtGetEvent(&event, evtWaitForever);
+  do {
+    EvtGetEvent(&event, evtWaitForever);
 
-	// Ask system to handle event.
-	if (false == SysHandleEvent(&event)) {
-	    // System did not handle event.
+    // Ask system to handle event.
+    if (false == SysHandleEvent(&event)) {
+      // System did not handle event.
 
-	    UInt16 error;
-	    // Ask Menu to handle event.
-	    if (false == MenuHandleEvent(0, &event, &error)) {
-		// Menu did not handle event.
-		// Ask App (that is, this) to handle event.
-		if (false == AppEventHandler(&event)) {
-		    // App did not handle event.
-		    // Send event to appropriate form.
-		    FrmDispatchEvent(&event);
-		}		// end if (false == AppEventHandler
-		// (&event))
-	    }			// end if (false == MenuHandleEvent (0,
-	    // &event, &error))
-	}			// end if (false == SysHandleEvent
+      UInt16 error;
+      // Ask Menu to handle event.
+      if (false == MenuHandleEvent(0, &event, &error)) {
+	// Menu did not handle event.
+	// Ask App (that is, this) to handle event.
+	if (false == AppEventHandler(&event)) {
+	  // App did not handle event.
+	  // Send event to appropriate form.
+	  FrmDispatchEvent(&event);
+	}			// end if (false == AppEventHandler
 	// (&event))
-    }
-    while (event.eType != appStopEvent);
+      }				// end if (false == MenuHandleEvent (0,
+      // &event, &error))
+    }				// end if (false == SysHandleEvent
+    // (&event))
+  }
+  while (event.eType != appStopEvent);
 }

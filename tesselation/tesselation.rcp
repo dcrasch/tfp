@@ -1,41 +1,41 @@
 ICON "tesselation.pbm"
-VERSION "0.5.5"
+VERSION "0.6.0"
 
 /* STRING gnuLicense FILE "license.txt" */
 
 FORM ID formMain AT (0 0 160 160)
 MENUID menuMain
 BEGIN
-    TITLE "Tesselation"
-    LIST "<EMPTY>" ID listFigure AT (0 15 160 121) FONT 0 VISIBLEITEMS 11
-    BUTTON "New" ID buttonNew AT (20 145 AUTO AUTO)
-    BUTTON "Edit" ID buttonEdit AT (PREVRIGHT+10 145 AUTO AUTO)
-    BUTTON "Delete" ID buttonDelete AT (PREVRIGHT+10 145 AUTO AUTO)
+  TITLE "Tesselation"
+  LIST "<EMPTY>" ID listFigure AT (0 15 160 121) FONT 0 VISIBLEITEMS 11
+  BUTTON "New" ID buttonNew AT (20 145 AUTO AUTO)
+  BUTTON "Edit" ID buttonEdit AT (PREVRIGHT+10 145 AUTO AUTO)
+  BUTTON "Delete" ID buttonDelete AT (PREVRIGHT+10 145 AUTO AUTO)
 END
 
 FORM ID formEdit AT (0 0 160 160)
-MENUID menuEdit
+  MENUID menuEdit
 BEGIN
 END
 
 FORM ID formTesselate AT (0 0 160 160)
-MENUID menuTesselate
+  MENUID menuTesselate
 BEGIN
 END
 
 MENU ID menuMain
 BEGIN
-/*
-  PULLDOWN "Beam"
+
+  PULLDOWN "Figure"
   BEGIN
-    MENUITEM "Beam Figure" ID menuItemBeamFigure
-    MENUITEM "Beam Tesselation" ID menuItemBeamTesselation
+    MENUITEM "New" ID buttonNew "N"
   END
-*/
+
   PULLDOWN "Help"
   BEGIN
     MENUITEM "Thanks" ID menuItemThanks
-    MENUITEM "About" ID menuItemAbout
+    MENUITEM "License" ID menuItemLicense
+    MENUITEM "About" ID menuItemAbout "A"
   END
 END
 
@@ -43,17 +43,17 @@ MENU ID menuEdit
 BEGIN  
   PULLDOWN "Tesselation"
   BEGIN
-    MENUITEM "B/W"	 ID menuItemTesselateBW
-    MENUITEM "Gray"      ID menuItemTesselateGray	
-    MENUITEM "Color"	 ID menuItemTesselate
+    MENUITEM "B/W"	 ID menuItemTesselateBW   "B"
+    MENUITEM "Gray"      ID menuItemTesselateGray "G"
+    MENUITEM "Color"	 ID menuItemTesselate     "T"
     
-    MENUITEM "Edit"      ID menuItemEdit
-    MENUITEM "Done" 	 ID menuItemEDone
+    MENUITEM "Done" 	 ID menuItemEDone   "D"
   END
+
   PULLDOWN "Edit"
   BEGIN
-    MENUITEM "Remove" ID menuItemRemove
-    MENUITEM "Fit"    ID menuItemFit
+    MENUITEM "Remove" ID menuItemRemove     "R"
+    MENUITEM "Fit"    ID menuItemFit        "F"
   END
 END
 
@@ -61,13 +61,12 @@ MENU ID menuTesselate
 BEGIN  
   PULLDOWN "Tesselation"
   BEGIN
-  MENUITEM "B/W"	 ID menuItemTesselateBW
-  MENUITEM "Gray"      	 ID menuItemTesselateGray	
-  MENUITEM "Color"	 ID menuItemTesselate
-    
+    MENUITEM "B/W"	 ID menuItemTesselateBW    "B"
+    MENUITEM "Gray"      ID menuItemTesselateGray  "G"
+    MENUITEM "Color"	 ID menuItemTesselate      "T"
   
-    MENUITEM "Edit"      ID menuItemEdit
-    MENUITEM "Done" 	 ID menuItemEDone
+    MENUITEM "Edit"      ID menuItemEdit   "E"
+    MENUITEM "Done" 	 ID menuItemEDone  "D"
   END
 
 END
@@ -86,10 +85,19 @@ BEGIN
   GRAFFITISTATEINDICATOR AT (RIGHT@143 BOTTOM@65)
 END
 
-ALERT ID alertID_about INFORMATION
+ALERT ID alertID_about 
+INFORMATION
 BEGIN
   TITLE "About Tesselation"
-  MESSAGE "Copyright (c) 2000 David Rasch drasch@users.sourceforge.net GNU GPL http://gnu.org/copyleft/gnu.html"
+  MESSAGE "David Rasch\nmailto:drasch@users.sourceforge.net\nhttp://tesselation.sourceforge.net/"
+  BUTTONS "Done"
+END
+
+ALERT ID alertID_license
+INFORMATION
+BEGIN
+  TITLE "License"
+  MESSAGE "Copyright (c) 2000 David Rasch GNU GPL\nhttp://gnu.org/copyleft/gnu.html"
   BUTTONS "Done"
 END
 
@@ -104,24 +112,24 @@ END
 ALERT ID alertID_delete
 CONFIRMATION
 BEGIN
-    TITLE "Delete Figure?"
-    MESSAGE "Are you sure you want to delete ^1"
-    BUTTONS "Yes" "No"
+  TITLE "Delete Figure?"
+  MESSAGE "Are you sure you want to delete ^1"
+  BUTTONS "Yes" "No"
 END
 
 ALERT ID alertID_remove
 CONFIRMATION
 BEGIN
-    TITLE "Remove Points?"
-    MESSAGE "Are you sure you want to remove the two points?"
-    BUTTONS "Yes" "No"
+  TITLE "Remove Points?"
+  MESSAGE "Are you sure you want to remove the two points?"
+  BUTTONS "Yes" "No"
 END
 
 ALERT ID alertID_selection
 INFORMATION
 BEGIN
-   TITLE "No point selected!"
-   MESSAGE "Click inside the square, after that select remove"
+  TITLE "No point selected!"
+  MESSAGE "Click inside the square, after that select remove"
    BUTTONS "OK"
 END  
 

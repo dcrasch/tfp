@@ -2,9 +2,9 @@
 #define __TVERTEX_H__
 #include "tpoint.h"
 typedef struct tvertexnode_tag {
-    TPoint_type p1;
-    TPoint_type p2;
-    struct tvertexnode_tag *next;
+  TPoint_type p1;
+  TPoint_type p2;
+  struct tvertexnode_tag *next;
 } TVertexnode_type;
 
 TVertexnode_type *TVertexnodeCreateXY(double x1, double y1, double x2,

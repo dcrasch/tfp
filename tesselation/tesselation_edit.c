@@ -18,188 +18,186 @@ static void setTesselate(Boolean m);
 
 Boolean EditFormEventHandler(EventPtr event)
 {
-    Boolean handled = false;
-    FormPtr frm;
-    switch (event->eType) {
-    case frmOpenEvent:
-	frm = FrmGetActiveForm();
-	FrmDrawForm(frm);
-	EditFormInit(frm);
-	handled = true;
-	break;
-    case frmCloseEvent:
-	EditFormCleanUp();
-	break;
+  Boolean handled = false;
+  FormPtr frm;
+  switch (event->eType) {
+  case frmOpenEvent:
+    frm = FrmGetActiveForm();
+    FrmDrawForm(frm);
+    EditFormInit(frm);
+    handled = true;
+    break;
+  case frmCloseEvent:
+    EditFormCleanUp();
+    break;
 
-    case menuEvent:
+  case menuEvent:
 
-	handled = EditFormMenuHandler(event);
-	break;
-    default:
-	break;
-    }
-    if (!handled)
-	handled = EditFormScreenHandler(event);
-    return handled;
+    handled = EditFormMenuHandler(event);
+    break;
+  default:
+    break;
+  }
+  if (!handled)
+    handled = EditFormScreenHandler(event);
+  return handled;
 }
 
 static Boolean EditFormScreenHandler(EventPtr event)
 {
-    Boolean handled = false;
-    if ((my_figure) &&
-	(RctPtInRectangle(event->screenX, event->screenY, &drawRect))) {
-	switch (event->eType) {
-	case penDownEvent:
-	    if (!theMouseDown) {
-		if (TFigureMouseDown
-		    (my_figure, event->screenX, event->screenY)) {
-		    TFigureRedraw(my_figure);
-		}
-		handled = true;
-		theMouseDown = true;
-	    }
-	    break;
-	case penMoveEvent:
-	    if (theMouseDown) {
-		if (TFigureMouseDrag
-		    (my_figure, event->screenX, event->screenY))
-		    TFigureRedraw(my_figure);
-	    }
-	    break;
-	case penUpEvent:
-	    if (theMouseDown) {
-		TFigureMouseUp(my_figure);
-		theMouseDown = false;
-	    }
-	default:
-	    break;
+  Boolean handled = false;
+  if ((my_figure) &&
+      (RctPtInRectangle(event->screenX, event->screenY, &drawRect))) {
+    switch (event->eType) {
+    case penDownEvent:
+      if (!theMouseDown) {
+	if (TFigureMouseDown(my_figure, event->screenX, event->screenY)) {
+	  TFigureRedraw(my_figure);
 	}
+	handled = true;
+	theMouseDown = true;
+      }
+      break;
+    case penMoveEvent:
+      if (theMouseDown) {
+	if (TFigureMouseDrag(my_figure, event->screenX, event->screenY))
+	  TFigureRedraw(my_figure);
+      }
+      break;
+    case penUpEvent:
+      if (theMouseDown) {
+	TFigureMouseUp(my_figure);
+	theMouseDown = false;
+      }
+    default:
+      break;
     }
-    return handled;
+  }
+  return handled;
 }
 
 static void EditFormInit(FormPtr frm)
 {
-    if (my_figure) {
-	TFigureFree(my_figure);
-    }
-    my_figure = TFigurerecordGet(currentFigure);
+  if (my_figure) {
+    TFigureFree(my_figure);
+  }
+  my_figure = TFigurerecordGet(currentFigure);
 
-    ErrFatalDisplayIf(!my_figure, "Could not open figure");
+  ErrFatalDisplayIf(!my_figure, "Could not open figure");
 
-    theMouseDown = false;
-    setTesselate(false);
-    TFigureFit(my_figure);
+  theMouseDown = false;
+  setTesselate(false);
+  TFigureFit(my_figure);
 
-    if (my_figure) {
-	TFigureRedraw(my_figure);
-    }
+  if (my_figure) {
+    TFigureRedraw(my_figure);
+  }
 }
 
 static void EditFormDone()
 {
-    if (my_figure)
-	TFigurerecordChange(currentFigure, my_figure);
-    FrmGotoForm(formMain);
+  if (my_figure)
+    TFigurerecordChange(currentFigure, my_figure);
+  FrmGotoForm(formMain);
 }
 
 static void setTesselate(Boolean m)
 {
-    FormPtr frm = FrmGetActiveForm();
-    tesselateMode = m;
+  FormPtr frm = FrmGetActiveForm();
+  tesselateMode = m;
 
-    if (tesselateMode) {
-	FrmSetMenu(frm, menuTesselate);
-    } else {
-	FrmSetMenu(frm, menuEdit);
-    }
+  if (tesselateMode) {
+    FrmSetMenu(frm, menuTesselate);
+  } else {
+    FrmSetMenu(frm, menuEdit);
+  }
 }
 
 static Boolean EditFormMenuHandler(EventPtr event)
 {
-    Boolean handled = false;
+  Boolean handled = false;
 
-    switch (event->data.menu.itemID) {
+  switch (event->data.menu.itemID) {
 
-    case menuItemTesselateBW:
-	setTesselate(true);
-	if (my_figure)
+  case menuItemTesselateBW:
+    setTesselate(true);
+    if (my_figure)
 
-	    TFigureTesselate(my_figure, 0);
-	handled = true;
-	break;
+      TFigureTesselate(my_figure, 0);
+    handled = true;
+    break;
 
-    case menuItemTesselateGray:
-	setTesselate(true);
-	if (my_figure)
-	    TFigureTesselate(my_figure, 1);
-	handled = true;
-	break;
+  case menuItemTesselateGray:
+    setTesselate(true);
+    if (my_figure)
+      TFigureTesselate(my_figure, 1);
+    handled = true;
+    break;
 
-    case menuItemTesselate:
-	setTesselate(true);
-	if (my_figure)
-	    TFigureTesselate(my_figure, 2);
-	handled = true;
-	break;
+  case menuItemTesselate:
+    setTesselate(true);
+    if (my_figure)
+      TFigureTesselate(my_figure, 2);
+    handled = true;
+    break;
 
-    case menuItemEdit:
+  case menuItemEdit:
 
-	setTesselate(false);
-	if (my_figure)
-	    TFigureRedraw(my_figure);
-	handled = true;
-	break;
+    setTesselate(false);
+    if (my_figure)
+      TFigureRedraw(my_figure);
+    handled = true;
+    break;
 
-    case menuItemRemove:
+  case menuItemRemove:
 
-	if (removePoint()) {
-	    TFigureRedraw(my_figure);
-	}
-	handled = true;
-	break;
-
-    case menuItemFit:
-	if (my_figure) {
-	    TFigureFit(my_figure);
-	    TFigureRedraw(my_figure);
-	}
-	handled = true;
-	break;
-    case menuItemEDone:
-
-	handled = true;
-	EditFormDone();
-	break;
-
-    default:
-	handled = false;
-	break;
-
+    if (removePoint()) {
+      TFigureRedraw(my_figure);
     }
-    return handled;
+    handled = true;
+    break;
+
+  case menuItemFit:
+    if (my_figure) {
+      TFigureFit(my_figure);
+      TFigureRedraw(my_figure);
+    }
+    handled = true;
+    break;
+  case menuItemEDone:
+
+    handled = true;
+    EditFormDone();
+    break;
+
+  default:
+    handled = false;
+    break;
+
+  }
+  return handled;
 }
 
 // clean up the form
 void EditFormCleanUp()
 {
-    if (my_figure) {
-	TFigureFree(my_figure);
-	my_figure = NULL;
-    }
+  if (my_figure) {
+    TFigureFree(my_figure);
+    my_figure = NULL;
+  }
 }
 
 Boolean removePoint()
 {
-    UInt16 choice;
-    if (my_figure->sellast) {
-	choice = FrmAlert(alertID_remove);
-	if (choice == 0) {
-	    TFigureRemovePoint(my_figure);
-	    return true;
-	}
-    } else {
-	choice = FrmAlert(alertID_selection);
+  UInt16 choice;
+  if (my_figure->sellast) {
+    choice = FrmAlert(alertID_remove);
+    if (choice == 0) {
+      TFigureRemovePoint(my_figure);
+      return true;
     }
-    return false;
+  } else {
+    choice = FrmAlert(alertID_selection);
+  }
+  return false;
 }

@@ -8,22 +8,22 @@
 #define DESCSIZE   32
 
 typedef struct tfigure_tag {
-    TLinenode_type *rootnode;
-    TVertexnode_type *selvertex;
-    TVertexnode_type *sellast;
-    TLinenode_type *selline;
+  TLinenode_type *rootnode;
+  TVertexnode_type *selvertex;
+  TVertexnode_type *sellast;
+  TLinenode_type *selline;
 
-    TPoint_type oldp;
-    double scale;
-    double rotinc;
+  TPoint_type oldp;
+  double scale;
+  double rotinc;
 
-    int gridincx, gridincy;
-    int shiftx, shifty;
+  int gridincx, gridincy;
+  int shiftx, shifty;
 
-    int offx, offy;
-    double offscale;
+  int offx, offy;
+  double offscale;
 
-    char name[DESCSIZE];
+  char name[DESCSIZE];
 } TFigure_type;
 
 TFigure_type *TFigureCreate(double scale, int gridincx, int gridincy,

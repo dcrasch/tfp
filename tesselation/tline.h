@@ -4,12 +4,12 @@
 #include "tvertex.h"
 
 typedef struct tline_tag {
-    TVertexnode_type *rootnode;
-    TVertexnode_type *lastnode;
-    double ca;
-    double sa;
-    Boolean corrp;
-    struct tline_tag *next;
+  TVertexnode_type *rootnode;
+  TVertexnode_type *lastnode;
+  double ca;
+  double sa;
+  Boolean corrp;
+  struct tline_tag *next;
 } TLinenode_type;
 
 TLinenode_type *TLinenodeCreateXY(double x1, double y1,
