@@ -62,7 +62,7 @@ BEGIN
   BEGIN
     MENUITEM "B/W"	 ID menuItemTesselateBW    "B"
     MENUITEM "Gray"      ID menuItemTesselateGray  "G"
-    MENUITEM "Color"	 ID menuItemTesselate      "T"
+    MENUITEM "Color"	 ID menuItemTesselate      "C"
   
     MENUITEM "Edit"      ID menuItemEdit   "E"
     MENUITEM "Done" 	 ID menuItemEDone  "D"
@@ -107,7 +107,7 @@ ALERT ID alertID_license
 INFORMATION
 BEGIN
   TITLE "License"
-  MESSAGE "Copyright (c) 2000,2001,2002 David Rasch GNU GPL v2\nhttp://gnu.org/copyleft/gnu.html"
+  MESSAGE "Copyright (c) 2000,2001,2002 by David Rasch distributed under GNU GPL v2\nhttp://gnu.org/copyleft/gnu.html"
   BUTTONS "Done"
 END
 
