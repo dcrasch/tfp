@@ -14,6 +14,8 @@
  *
  * 
  */
+/*! \file tfrecord.h
+*/
 
 #ifndef __TFRECORD_H__
 #define __TFRECORD_H__
@@ -25,17 +27,60 @@
 #define DOUBLESIZE (sizeof(double))
 #define VERTEXSIZE (sizeof(TPoint_type)*2)
 
+/*!
+  \brief open the database
+*/
 void TFigureOpen(void);
+
+/*!
+  \brief close the database
+*/
 void TFigureClose(void);
 
+/*!
+  \brief count of the figures in the database
+*/
 UInt16 TFigurerecordGetCount(void);
+
+/*!
+  \brief add a new figure to the database
+  \param t1 figure
+*/
 Boolean TFigurerecordNew(TFigure_type * t1);
+
+/*!
+  \brief retrieve figure from the database
+  \param i index of record in database
+*/
 TFigure_type *TFigurerecordGet(UInt16 i);
+
+/*!
+  \brief delete a record from the database
+  \param in index of record in the database
+*/
 void TFigurerecordDelete(UInt16 i);
+
+/*!
+  \brief get the name of the record
+  \param i index of record in the database
+  \param name name of record
+*/
 void TFigurerecordGetName(UInt16 i, char *name);
+
+/*!
+  \brief update the record in the database
+  \param i ondex of record in the database
+  \param t1 figure
+*/
 Boolean TFigurerecordChange(UInt16 i, TFigure_type * t1);
 
-void writePoint(TPoint_type t1, MemHandle p, UInt32 * offset);
+/*!
+  \brief write a point to the record
+  \param p1 point to write
+  \param p address to write
+  \param offset to write
+*/
+void writePoint(TPoint_type p1, MemHandle p, UInt32 * offset);
 void writeDouble(double d1, MemHandle p, UInt32 * offset);
 void writeInt(int i1, MemHandle p, UInt32 * offset);
 void writeVertex(TVertexnode_type * v1, MemHandle, UInt32 * offset);
