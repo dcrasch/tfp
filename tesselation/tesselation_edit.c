@@ -49,10 +49,11 @@ static Boolean EditFormScreenHandler(EventPtr event)
 	switch (event->eType) {
 	case penDownEvent:
 	    if (!theMouseDown) {
-	      if (TFigureMouseDown(my_figure, event->screenX, event->screenY)) {
-		TFigureRedraw(my_figure);
-	      }
-	         handled = true;
+		if (TFigureMouseDown
+		    (my_figure, event->screenX, event->screenY)) {
+		    TFigureRedraw(my_figure);
+		}
+		handled = true;
 		theMouseDown = true;
 	    }
 	    break;
@@ -81,14 +82,14 @@ static void EditFormInit(FormPtr frm)
 	TFigureFree(my_figure);
     }
     my_figure = TFigurerecordGet(currentFigure);
-    
-    
+
+
     ErrFatalDisplayIf(!my_figure, currentFigure);
-    
+
     theMouseDown = false;
     tesselateMode = false;
     if (my_figure) {
-      TFigureRedraw(my_figure);
+	TFigureRedraw(my_figure);
     }
 }
 

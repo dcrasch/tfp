@@ -65,7 +65,8 @@ Boolean DoAddFigure(void)
 
 	titleptr = FldGetTextPtr(field);
 
-	if (titleptr) {
+	if ((titleptr) && StrLen(titleptr) > 0) {
+
 	    StrNCopy(t1->name, titleptr, DESCSIZE);
 	    t1->name[DESCSIZE - 1] = 0;
 	}
