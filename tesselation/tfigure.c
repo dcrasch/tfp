@@ -38,25 +38,33 @@ void TFigureDraw(TFigure_type * t1)
 {
   if (t1) {
     TLinenode_type *l1 = t1->rootnode;
-    WinPushDrawState();
-    WinSetClip(&(drawRect));
     while (l1 != NULL) {
       TLineDraw(*l1, t1->offx, t1->offy, t1->offscale);
       l1 = l1->next;
     }
 
-/*    if (t1->selvertex) { */
-/* 			WinSetForeColor (137); */
-/* 			TPointDraw (TPointAddXY */
-/* 				    (t1->selvertex->p1, t1->offx, t1->offy)); */
-/* 			TPointDraw (TPointAddXY */
-/* 				    (t1->selvertex->p2, t1->offx, t1->offy)); */
-/* 		} */
+    if (t1->selvertex) {
+      TPoint_type p1 =
+	  TPointAddXY(TPointMul(t1->selvertex->p1, t1->offscale), t1->offx,
+		      t1->offy);
+      TPoint_type p2 =
+	  TPointAddXY(TPointMul(t1->selvertex->p2, t1->offscale), t1->offx,
+		      t1->offy);
 
-    WinResetClip();
-    WinPopDrawState();
+      WinPushDrawState();
+      WinSetClip(&(drawRect));
+      WinSetForeColor(137);
+
+      TPointDraw(p1);
+      TPointDraw(p2);
+
+      WinResetClip();
+      WinPopDrawState();
+    }
   }
 }
+
+
 void TFigureTesselate(TFigure_type * t1, int mode)
 {
   if (t1) {
@@ -247,4 +255,18 @@ void TFigureFit(TFigure_type * t1)
   t1->offx = 80 - (pmin.x + width / 2) * t1->offscale;
   t1->offy = 80 - (pmin.y + height / 2) * t1->offscale;
 
+}
+
+
+void TFigureZoom(TFigure_type * t1, double zoom)
+{
+  TPoint_type middle;
+  t1->offscale = t1->offscale * zoom;
+  if (t1->selline->corrp) {
+    middle = t1->sellast->p2;
+  } else {
+    middle = t1->sellast->p1;
+  }
+  t1->offx = 80 - middle.x * t1->offscale;
+  t1->offy = 80 - middle.y * t1->offscale;
 }

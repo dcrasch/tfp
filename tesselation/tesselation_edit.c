@@ -16,6 +16,7 @@ static void EditFormCleanUp();
 
 static Boolean removePoint();
 static void setTesselate(Boolean m);
+static Boolean zoomPoint(double zoom);
 
 Boolean EditFormEventHandler(EventPtr event)
 {
@@ -165,6 +166,19 @@ static Boolean EditFormMenuHandler(EventPtr event)
     }
     handled = true;
     break;
+
+  case menuItemZoomIn:
+    if (zoomPoint(1.6)) {
+      TFigureRedraw(my_figure);
+    }
+    handled = true;
+    break;
+  case menuItemZoomOut:
+    if (zoomPoint(0.625)) {
+      TFigureRedraw(my_figure);
+    }
+    handled = true;
+    break;
   case menuItemEDone:
 
     handled = true;
@@ -198,6 +212,18 @@ Boolean removePoint()
       return true;
     }
   } else {
+    choice = FrmAlert(alertID_selection);
+  }
+  return false;
+}
+
+Boolean zoomPoint(double zoom)
+{
+  if (my_figure->sellast) {
+    TFigureZoom(my_figure, zoom);
+    return true;
+  } else {
+    int choice;
     choice = FrmAlert(alertID_selection);
   }
   return false;

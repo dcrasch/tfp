@@ -42,5 +42,6 @@ Boolean TFigureMouseDrag(TFigure_type * t1, int x, int y);
 void TFigureMouseUp(TFigure_type * t1);
 
 void TFigureFit(TFigure_type * t1);
+void TFigureZoom(TFigure_type * t1, double zoom);
 
 #endif
