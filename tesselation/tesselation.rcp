@@ -54,7 +54,7 @@ BEGIN
   END
 END
 
-FORM ID formAddFigure AT (2 73 156 65) 
+FORM ID formAddFigure AT (2 88 156 70) 
 MODAL
 BEGIN
   TITLE "Add Figure"
@@ -66,12 +66,13 @@ BEGIN
   POPUPLIST triggerFigure listBaseFigures
   BUTTON "Ok" ID buttonAFOK AT (3 51 AUTO AUTO)
   BUTTON "Cancel" ID buttonAFCancel AT (PREVRIGHT+5 PREVTOP AUTO AUTO)
+  GRAFFITISTATEINDICATOR AT (RIGHT@143 BOTTOM@65)
 END
 
 ALERT ID alertID_about INFORMATION
 BEGIN
   TITLE "About Tesselation"
-  MESSAGE "Copyright (c) 2000 David Rasch drasch@user.sourceforge.net GNU GPL http://gnu.org/copyleft/gnu.html"
+  MESSAGE "Copyright (c) 2000 David Rasch drasch@users.sourceforge.net GNU GPL http://gnu.org/copyleft/gnu.html"
   BUTTONS "Done"
 END
 
@@ -79,7 +80,7 @@ ALERT ID alertID_thanks
 INFORMATION
 BEGIN
   TITLE "Thanks"
-  MESSAGE "Thanks to Fred, Gerald, Stefan, Bas and Rene."
+  MESSAGE "Thanks to Fred, Gerald, Stefan, Bas and René."
   BUTTONS "Done"
 END
 

@@ -83,8 +83,7 @@ static void EditFormInit(FormPtr frm)
     }
     my_figure = TFigurerecordGet(currentFigure);
 
-
-    ErrFatalDisplayIf(!my_figure, currentFigure);
+    ErrFatalDisplayIf(!my_figure, "Could not open figure");
 
     theMouseDown = false;
     tesselateMode = false;
