@@ -8,7 +8,7 @@ NM	 = m68k-palmos-nm
 BUILDPRC = build-prc
 
 TARGET  = tesselation
-APPNAME = "Tesselation"
+APPNAME = "Tessellation"
 APPID   = "TeAp"
 RESDIR  = .
 

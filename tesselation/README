@@ -1,7 +1,7 @@
-README for Tessellation for the Palm 0.6
+README for Tessellation for the Palm 0.7.1
 
-by David Rasch (drasch@xs4all.nl) 
-Sunday, January 6, 2002
+by David Rasch (drasch@users.sourceforge.net) 
+Friday August 30 2002
 
 The definitive documentation is here:
 http://tesselation.sourceforge.net/
@@ -20,9 +20,16 @@ Requirements
 
 Quick Usage
 ---------------------------------------
-1) Put tessellation.prc onto your palm.
-2) Select 
-
+1) Put tesselation.prc onto your palm.
+2) Start the program
+3) press new button
+4) press OK
+5) press Edit
+6) place your stylus on a line and move your stylus up or down
+7) take the stylus off the screen
+8) / C
+9) voila a tessellation
+10) / D or / E if you want to edit
 
 Features
 ---------------------------------------
@@ -37,13 +44,13 @@ You'll need a suitable Palm development environment, Tessellation was created wi
 
 You should look in the Makefile to make sure the program names and paths are ok.
 "make"
-You should now have tessellation.prc.
+You should now have tesselation.prc.
 
 If you're messing with the source, then maybe you want to help.  If you have
-any problems, feel free to email me at drasch@xs4all.nl .  Also, if you
-plan to do anything with Tessellation, be it coding, translations, or whatever,
-please use the latest (CVS) copy.  It can be found on:
-  http://sourceforge.net/projects/tesselation/
+any problems, feel free to email me at drasch@user.sourceforge.net .  
+Also, if you plan to do anything with Tessellation, be it coding, 
+translations, or whatever, please use the latest (CVS) copy.  
+It can be found on:  http://sourceforge.net/projects/tesselation/
 
 Miscellaneous Notes
 ------------------------------

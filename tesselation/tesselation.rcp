@@ -1,5 +1,5 @@
 ICON "tesselation.pbm"
-VERSION "0.7.0"
+VERSION "0.7.1"
 
 FORM ID formMain AT (0 0 160 160)
 MENUID menuMain
@@ -98,7 +98,7 @@ END
 ALERT ID alertID_about 
 INFORMATION
 BEGIN
-  TITLE "About Tesselation"
+  TITLE "About Tessellation 0.7.1"
   MESSAGE "David Rasch\nmailto:drasch@users.sourceforge.net\nhttp://tesselation.sourceforge.net/"
   BUTTONS "Done"
 END
@@ -107,7 +107,7 @@ ALERT ID alertID_license
 INFORMATION
 BEGIN
   TITLE "License"
-  MESSAGE "Copyright (c) 2000 David Rasch GNU GPL\nhttp://gnu.org/copyleft/gnu.html"
+  MESSAGE "Copyright (c) 2000,2001,2002 David Rasch GNU GPL v2\nhttp://gnu.org/copyleft/gnu.html"
   BUTTONS "Done"
 END
 
