@@ -123,7 +123,7 @@ double TPointDistanceFromXY(TPoint_type p1, double x, double y);
   \param p1 middle point of square
   \param hx x coordinate
   \param hy y coordinate
-  \param ps width and height of square / 2 + 1
+  \param ps width and height of square divide 2 + 1
   \return if the point
 */
 Boolean TPointHitXY(TPoint_type p1, double hx, double hy, double ps);

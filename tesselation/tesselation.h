@@ -24,7 +24,7 @@
 /*!
   \brief application id 
 */
-#define appCreator             'TeAp'
+#define appCreator             'DCRP'
 /*!
   \brief creator id
 */
