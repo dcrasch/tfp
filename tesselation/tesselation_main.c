@@ -22,8 +22,8 @@ Boolean MainFormEventHandler(EventPtr event)
     case frmOpenEvent:
 	{
 	    FormPtr frm = FrmGetActiveForm();
-	    MainFormInit(frm);
 	    FrmDrawForm(frm);
+	    MainFormInit(frm);
 	    handled = true;
 	    break;
 	}
@@ -112,10 +112,7 @@ static Boolean MainFormButtonHandler(FormPtr frm, EventPtr event)
 
 void MainFormInit(FormPtr frm)
 {
-
-    FrmDrawForm(frm);
     FigureListFill(frm);
-
 }
 
 static void FigureListFill(FormPtr frm)

@@ -38,100 +38,105 @@ TFigure_type *TFigureCreate(double scale, int gridincx, int gridincy,
 
 void TFigureDraw(TFigure_type * t1)
 {
-    TLinenode_type *l1 = t1->rootnode;
-    WinPushDrawState();
-    WinSetClip(&(drawRect));
-    while (l1 != NULL) {
-	TLineDraw(*l1, t1->offx, t1->offy);
-	l1 = l1->next;
-    }
+    if (t1) {
+	TLinenode_type *l1 = t1->rootnode;
+	WinPushDrawState();
+	WinSetClip(&(drawRect));
+	while (l1 != NULL) {
+	    TLineDraw(*l1, t1->offx, t1->offy);
+	    l1 = l1->next;
+	}
 
-    if (t1->selvertex) {
-	WinSetForeColor(137);
-	TPointDraw(TPointAddXY(t1->selvertex->p1, t1->offx, t1->offy));
-	TPointDraw(TPointAddXY(t1->selvertex->p2, t1->offx, t1->offy));
+	if (t1->selvertex) {
+	    WinSetForeColor(137);
+	    TPointDraw(TPointAddXY(t1->selvertex->p1, t1->offx, t1->offy));
+	    TPointDraw(TPointAddXY(t1->selvertex->p2, t1->offx, t1->offy));
+	}
+	WinResetClip();
+	WinPopDrawState();
     }
-    WinResetClip();
-    WinPopDrawState();
 }
 
 void TFigureTesselate(TFigure_type * t1)
 {
-    double rot;
-    int sx, sy;
-    double ca, sa;
-    int minx = -(t1->scale) * (t1->gridincx / 2 + t1->offx);
-    int maxx = 160 + t1->scale * (t1->gridincx / 2);
-    int miny = -(t1->scale) * (t1->gridincy / 2 + t1->offy);
-    int maxy = 160 + t1->scale * (t1->gridincy / 2 + t1->offy);
-    WinPushDrawState();
-    WinSetClip(&(drawRect));
-    WinEraseRectangle(&(drawRect), 0);
+    if (t1) {
+	double rot;
+	int sx, sy;
+	double ca, sa;
+	int minx = -(t1->scale) * (t1->gridincx / 2 + t1->offx);
+	int maxx = 160 + t1->scale * (t1->gridincx / 2);
+	int miny = -(t1->scale) * (t1->gridincy / 2 + t1->offy);
+	int maxy = 160 + t1->scale * (t1->gridincy / 2 + t1->offy);
+	WinPushDrawState();
+	WinSetClip(&(drawRect));
+	WinEraseRectangle(&(drawRect), 0);
 
-    sx = 60;
-    sy = 60;
-    while (miny <= maxy) {
-	sx = minx;
-	sy = miny;
-	while (sx <= maxx) {
-	    rot = 0;
-	    while (rot < TWO_PI) {
-		TLinenode_type *l1 = t1->rootnode;
-		ca = _cos(rot);
-		sa = _sin(rot);
-		while (l1 != NULL) {
-		    // calculate fillcoord
+	sx = 60;
+	sy = 60;
+	while (miny <= maxy) {
+	    sx = minx;
+	    sy = miny;
+	    while (sx <= maxx) {
+		rot = 0;
+		while (rot < TWO_PI) {
+		    TLinenode_type *l1 = t1->rootnode;
+		    ca = _cos(rot);
+		    sa = _sin(rot);
+		    while (l1 != NULL) {
+			// calculate fillcoord
 
-		    TLineTesselate(*l1, sx, sy, t1->scale, ca, sa);
-		    l1 = l1->next;
+			TLineTesselate(*l1, sx, sy, t1->scale, ca, sa);
+			l1 = l1->next;
+		    }
+		    rot += t1->rotinc;
 		}
-		rot += t1->rotinc;
+		sx += t1->scale * t1->gridincx;
+		sy += t1->scale * t1->shifty;
 	    }
-	    sx += t1->scale * t1->gridincx;
-	    sy += t1->scale * t1->shifty;
+	    minx += t1->scale * t1->shiftx;
+	    miny += t1->scale * t1->gridincy;
+	    if (minx > 0) {
+		minx -= t1->scale * t1->gridincx;
+		maxy -= t1->scale * t1->shifty;
+	    }
 	}
-	minx += t1->scale * t1->shiftx;
-	miny += t1->scale * t1->gridincy;
-	if (minx > 0) {
-	    minx -= t1->scale * t1->gridincx;
-	    maxy -= t1->scale * t1->shifty;
-	}
-    }
 #ifdef __TFILL_H__
-    TFigureFill(t1);
+	TFigureFill(t1);
 #endif
-    WinResetClip();
-    WinPopDrawState();
+	WinResetClip();
+	WinPopDrawState();
+    }
 }
 
 Boolean TFigureMouseDown(TFigure_type * t1, int x, int y)
 {
-
-    TLinenode_type *htl;
-    TVertexnode_type *htv = NULL;
-    if (t1->selvertex != NULL)
-	return false;
-    htl = t1->rootnode;
-    while (htl) {
-	htv = TLineHit(htl, x - t1->offx, y - t1->offy);
-	if (!htv)
-	    htv = TLineBreakAtXY(htl, x - t1->offx, y - t1->offy);
-	if (htv) {
-	    t1->selline = htl;
-	    t1->selvertex = htv;
-	    t1->oldp.x = x;
-	    t1->oldp.y = y;
-	    return true;
+    if (t1) {
+	TLinenode_type *htl;
+	TVertexnode_type *htv = NULL;
+	if (t1->selvertex != NULL)
+	    return false;
+	htl = t1->rootnode;
+	while (htl) {
+	    htv = TLineHit(htl, x - t1->offx, y - t1->offy);
+	    if (!htv)
+		htv = TLineBreakAtXY(htl, x - t1->offx, y - t1->offy);
+	    if (htv) {
+		t1->selline = htl;
+		t1->selvertex = htv;
+		t1->oldp.x = x;
+		t1->oldp.y = y;
+		return true;
+	    }
+	    htl = htl->next;
 	}
-	htl = htl->next;
+	t1->selvertex = NULL;
     }
-    t1->selvertex = NULL;
     return false;
 }
 
 Boolean TFigureMouseDrag(TFigure_type * t1, int x, int y)
 {
-    if (t1->selvertex) {
+    if (t1 && t1->selvertex) {
 	TPoint_type pa = { x - t1->oldp.x, y - t1->oldp.y };
 	if ((pa.x == 0) && (pa.y == 0))
 	    return false;
@@ -156,18 +161,23 @@ Boolean TFigureMouseDrag(TFigure_type * t1, int x, int y)
     return false;
 }
 
+
 void TFigureMouseUp(TFigure_type * t1)
 {
-    if (t1->selvertex)
-	t1->sellast = t1->selvertex;
-    t1->selvertex = NULL;
+    if (t1) {
+	if (t1->selvertex)
+	    t1->sellast = t1->selvertex;
+	t1->selvertex = NULL;
+    }
 }
 
 
 void TFigureRedraw(TFigure_type * t1)
 {
-    WinEraseRectangle(&(drawRect), 0);
-    TFigureDraw(t1);
+    if (t1) {
+	WinEraseRectangle(&(drawRect), 0);
+	TFigureDraw(t1);
+    }
 }
 
 void TFigureRemovePoint(TFigure_type * t1)
@@ -189,15 +199,21 @@ void TFigureRemovePoint(TFigure_type * t1)
 
 void TFigureFree(TFigure_type * t1)
 {
-    TLinenode_type *l1;
-    TLinenode_type *next = NULL;
+    if (t1) {
+	TLinenode_type *l1;
+	TLinenode_type *next = NULL;
 
-    l1 = t1->rootnode;
-    while (l1 != NULL) {
-	next = l1->next;
-	TLinenodeFree(l1);
-	l1 = next;
+	l1 = t1->rootnode;
+	while (l1) {
+	    next = l1->next;
+	    TLinenodeFree(l1);
+	    l1 = next;
+	}
+	t1->selvertex = NULL;
+	t1->sellast = NULL;
+	t1->rootnode = NULL;
+	t1->selline = NULL;
+
+	MemPtrFree(t1);
     }
-    MemPtrFree(t1);
-    t1 = NULL;
 }

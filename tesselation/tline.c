@@ -159,6 +159,7 @@ void TLinenodeFree(TLinenode_type * l1)
 	TVertexnodeFree(v1);
 	v1 = next;
     }
+    l1->rootnode = NULL;
+    l1->lastnode = NULL;
     MemPtrFree(l1);
-    l1 = NULL;
 }

@@ -11,41 +11,30 @@ static Boolean EditFormMenuHandler(EventPtr event);
 static Boolean EditFormScreenHandler(EventPtr event);
 static void EditFormInit(FormPtr frm);
 static void EditFormDone();
+static void EditFormCleanUp();
 
 static Boolean removePoint();
 
 Boolean EditFormEventHandler(EventPtr event)
 {
     Boolean handled = false;
-
+    FormPtr frm;
     switch (event->eType) {
     case frmOpenEvent:
-	{
-	    FormPtr frm = FrmGetActiveForm();
-	    FrmDrawForm(frm);
-	    EditFormInit(frm);
-
-	    handled = true;
-	    break;
-	}
+	frm = FrmGetActiveForm();
+	FrmDrawForm(frm);
+	EditFormInit(frm);
+	handled = true;
+	break;
     case frmCloseEvent:
-	{
-	    if (my_figure) {
-		TFigureFree(my_figure);
-		my_figure = NULL;
-	    }
-	    handled = true;
-	    break;
-	}
+	EditFormCleanUp();
+	break;
+
     case menuEvent:
-	{
-	    handled = EditFormMenuHandler(event);
-	    break;
-	}
+	handled = EditFormMenuHandler(event);
+	break;
     default:
-	{
-	    break;
-	}
+	break;
     }
     if (!handled)
 	handled = EditFormScreenHandler(event);
@@ -88,16 +77,21 @@ static Boolean EditFormScreenHandler(EventPtr event)
 
 static void EditFormInit(FormPtr frm)
 {
+    if (my_figure)
+	TFigureFree(my_figure);
     my_figure = TFigurerecordGet(currentFigure);
     ErrFatalDisplayIf(!my_figure, "Could not get record");
+    //my_figure=NULL;
     theMouseDown = false;
     tesselateMode = false;
-    TFigureRedraw(my_figure);
+    if (my_figure)
+	TFigureRedraw(my_figure);
 }
 
 static void EditFormDone()
 {
-    TFigurerecordChange(currentFigure, my_figure);
+    if (my_figure)
+	TFigurerecordChange(currentFigure, my_figure);
     FrmGotoForm(formMain);
 }
 
@@ -142,6 +136,16 @@ static Boolean EditFormMenuHandler(EventPtr event)
     }
     return handled;
 }
+
+// clean up the form
+void EditFormCleanUp()
+{
+    if (my_figure) {
+	TFigureFree(my_figure);
+	my_figure = NULL;
+    }
+}
+
 
 Boolean removePoint()
 {

@@ -41,6 +41,6 @@ TVertexnodeAdd(TVertexnode_type * rootnode, double x1, double y1,
 
 void TVertexnodeFree(TVertexnode_type * v1)
 {
+    v1->next = NULL;
     MemPtrFree(v1);
-    v1 = NULL;
 }

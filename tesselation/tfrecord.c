@@ -19,6 +19,8 @@ Boolean TFigurerecordNew(TFigure_type * t1)
     UInt16 uIndex = 0;
     UInt32 offset = 0;
 
+    if (!t1)
+	return false;
     hFigure = DmNewRecord(s_dbFig, &uIndex, calculateFigureSize(t1));
 
     if (hFigure) {
@@ -38,6 +40,9 @@ Boolean TFigurerecordChange(UInt16 i, TFigure_type * t1)
 {
     MemHandle hFigure;
     UInt32 offset = 0;
+
+    if (!t1)
+	return false;
     hFigure = DmResizeRecord(s_dbFig, i, calculateFigureSize(t1));
 
     if (hFigure) {
@@ -80,7 +85,7 @@ void TFigurerecordGetName(UInt16 i, char *name)
 	MemHandle p = (MemHandle) MemHandleLock(hFigure);
 	if (!p)
 	    ErrFatalDisplay("Could not get handle");
-	StrNCopy(name, (char *) p, DESCSIZE - 1);
+	StrNCopy(name, (char *) p, DESCSIZE);
 	MemPtrUnlock(p);
 	DmReleaseRecord(s_dbFig, i, false);
     } else {
@@ -178,7 +183,7 @@ void writeFigure(TFigure_type * t1, MemHandle p, UInt32 * offset)
 
     // to make sure string ends; write zero's
     DmSet(p, (*offset), DESCSIZE, 0);
-    DmWrite(p, (*offset), (t1->name), DESCSIZE - 1);
+    DmWrite(p, (*offset), (t1->name), DESCSIZE);
     (*offset) += DESCSIZE;
 
     counteroffset = (*offset);
@@ -282,7 +287,7 @@ TFigure_type *readFigure(MemHandle p, UInt32 * offset)
 
     t1 = (TFigure_type *) MemPtrNew(sizeof(TFigure_type));
 
-    StrNCopy(t1->name, (char *) ((UInt32) p + (*offset)), DESCSIZE - 1);
+    StrNCopy(t1->name, (char *) ((UInt32) p + (*offset)), DESCSIZE);
     (*offset) += DESCSIZE;
 
     counter = readUInt16(p, offset);
@@ -307,6 +312,8 @@ TFigure_type *readFigure(MemHandle p, UInt32 * offset)
 
     // initialize standard values
     t1->selvertex = NULL;
+    t1->sellast = NULL;
+    t1->selline = NULL;
     t1->oldp.x = 0;
     t1->oldp.y = 0;
 
@@ -339,6 +346,6 @@ UInt32 calculateFigureSize(TFigure_type * t1)
     size += DOUBLESIZE * 2;	// scale, rotinc
     size += INTSIZE * 6;	// gridincx,gridincy,shiftx,shifty,offx,offy
 
-    size += DESCSIZE + 1;	// description string
+    size += DESCSIZE;		// description string
     return size;
 }

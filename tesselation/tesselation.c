@@ -33,6 +33,7 @@ RectangleType drawRect = { {0, 0}, {160, 160} };
  */
 static Err StartApplication(void)
 {
+    // ReadPrefs();
     TFigureOpen();
 
     FrmGotoForm(formMain);
@@ -44,16 +45,16 @@ static Err StartApplication(void)
  */
 static void StopApplication(void)
 {
+    TFigureClose();
+    // WritePrefs();
     FrmSaveAllForms();
     FrmCloseAllForms();
 
-    TFigureClose();
 }
 
 void AppLoadForm(UInt16 wFormID)
 {
     FormPtr frm = FrmInitForm(wFormID);
-
     FrmSetActiveForm(frm);
 
     // Set the event handler for the form.
