@@ -14,20 +14,53 @@
  *
  * 
  */
-
+/*! \file tesselation_add.h
+ */
 #ifndef __TESSELATION_ADD_H__
 #define __TESSELATION_ADD_H__
 
 #include <PalmOS.h>
 #include "TinyTrig.h"
+
+/*!
+  \brief add new figure dialog
+*/
 extern Boolean DoAddFigure();
 
+/*!
+  \brief square figure 
+  \return figure
+*/
 TFigure_type *TFigureSquare();
+/*!
+  \brief square2 figure 
+  \return figure
+*/
 TFigure_type *TFigureSquare2();
+/*!
+  \brief square90 figure 
+  \return figure
+*/
 TFigure_type *TFigureSquare90();
+/*!
+  \brief squaren8 figure 
+  \return figure
+*/
 TFigure_type *TFigureSquareN8();
+/*!
+  \brief brick figure 
+  \return figure
+*/
 TFigure_type *TFigureBrick();
+/*!
+  \brief triangle figure 
+  \return figure
+*/
 TFigure_type *TFigureTriangle();
+/*!
+  \brief diamond figure
+  \return figure
+*/
 TFigure_type *TFigureDiamond();
 
 #endif

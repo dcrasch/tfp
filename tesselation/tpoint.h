@@ -42,12 +42,14 @@ typedef struct tpoint_tag {
   \param p1 point
 */
 void TPointDraw(TPoint_type p1);
+
 /*!
   \brief Draw a line between two points
   \param p1 point
   \param p2 point
 */
 void TPointDrawLine(TPoint_type p1, TPoint_type p2);
+
 /*!
   \brief add x and y to p1
   \param p1 point
@@ -62,6 +64,7 @@ TPoint_type TPointAddXY(TPoint_type p1, double x, double y);
   \param p2 point
   \return the addition of p1 and p2
 */
+
 TPoint_type TPointAddPoint(TPoint_type p1, TPoint_type p2);
 /*!
   \brief the substract of p1 and p2
@@ -81,6 +84,8 @@ TPoint_type TPointMul(TPoint_type p1, double lambda);
 
 /*!
   \brief distance of p1 from 0
+
+  \f$\sqrt{(p1.x+p1.y)^2}\f$
   \param p1 point
   \return the distance of p1 from 0
 */

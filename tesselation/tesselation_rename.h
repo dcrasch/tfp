@@ -14,10 +14,15 @@
  *
  * 
  */
+/*! \file tesselation_rename.h
+ */
 
 #ifndef __TESSELATION_RENAME_H__
 #define __TESSELATION_RENAME_H__
 
+/*!
+  \brief current rename figure
+*/
 extern Boolean DoRenameFigure();
 
 #endif
