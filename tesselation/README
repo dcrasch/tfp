@@ -1,0 +1,55 @@
+README for Tessellation for the Palm 0.6
+
+by David Rasch (drasch@xs4all.nl) 
+Sunday, January 6, 2002
+
+The definitive documentation is here:
+http://tesselation.sourceforge.net/
+
+What is Tessellation for the Palm?
+---------------------------------------
+
+Tessellation for the palm is a that allows you to create tessellations.
+A tessellation is a mosaic pattern. 
+
+
+Requirements
+---------------------------------------
+* Palm OS 3.5 or better
+
+
+Quick Usage
+---------------------------------------
+1) Put tessellation.prc onto your palm.
+2) Select 
+
+
+Features
+---------------------------------------
+
+* Color
+* Absolutely 100% Free Software (licensed under the GPL 2.0)
+
+Fiddling with the Source
+---------------------------------------
+
+You'll need a suitable Palm development environment, Tessellation was created with Palm SDK 3.5, so you'll need a copy of that too.
+
+You should look in the Makefile to make sure the program names and paths are ok.
+"make"
+You should now have tessellation.prc.
+
+If you're messing with the source, then maybe you want to help.  If you have
+any problems, feel free to email me at drasch@xs4all.nl .  Also, if you
+plan to do anything with Tessellation, be it coding, translations, or whatever,
+please use the latest (CVS) copy.  It can be found on:
+  http://sourceforge.net/projects/tesselation/
+
+Miscellaneous Notes
+------------------------------
+  ** The standard "it runs fine for me" disclaimer applies.  I've tested it a
+     lot myself, but you can never predict everything.  Still, there's no
+     oddball hacking involved so I think the chance of catastophic Palm
+     explosion should be small indeed.  This is not to say that it won't ever
+     crash/hang, but if it does...
+

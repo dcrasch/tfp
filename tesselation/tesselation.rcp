@@ -1,12 +1,10 @@
 ICON "tesselation.pbm"
 VERSION "0.6.0"
 
-/* STRING gnuLicense FILE "license.txt" */
-
 FORM ID formMain AT (0 0 160 160)
 MENUID menuMain
 BEGIN
-  TITLE "Tesselation"
+  TITLE "Tessellation"
   LIST "<EMPTY>" ID listFigure AT (0 15 160 121) FONT 0 VISIBLEITEMS 11
   BUTTON "New" ID buttonNew AT (25 145 AUTO AUTO)
   BUTTON "Edit" ID buttonEdit AT (PREVRIGHT+10 145 AUTO AUTO)
@@ -17,8 +15,8 @@ FORM ID formEdit AT (0 0 160 160)
 BEGIN
 END
 
-FORM ID formTesselate AT (0 0 160 160)
-  MENUID menuTesselate
+FORM ID formTessellate AT (0 0 160 160)
+  MENUID menuTessellate
 BEGIN
 END
 
@@ -42,7 +40,7 @@ END
 
 MENU ID menuEdit
 BEGIN  
-  PULLDOWN "Tesselation"
+  PULLDOWN "Tessellation"
   BEGIN
     MENUITEM "B/W"	 ID menuItemTesselateBW   "B"
     MENUITEM "Gray"      ID menuItemTesselateGray "G"
@@ -60,9 +58,9 @@ BEGIN
   END
 END
 
-MENU ID menuTesselate
+MENU ID menuTessellate
 BEGIN  
-  PULLDOWN "Tesselation"
+  PULLDOWN "Tessellation"
   BEGIN
     MENUITEM "B/W"	 ID menuItemTesselateBW    "B"
     MENUITEM "Gray"      ID menuItemTesselateGray  "G"

@@ -1,8 +1,18 @@
 /*
- * Tesselation ** Copyright (c) 2001, David Rasch <drasch@science.uva.nl>
- * ** Licensed under the GNU GPL, version 2 or later ** See file "COPYING"
- * that you should have received with this program ** or visit
- * http://www.gnu.org/copyleft/gpl.html ** 
+ * Tesselation 
+ *
+ * Copyright (c) 2001, David Rasch <drasch@xs4all.nl>
+ * 
+ *
+ * Licensed under the GNU GPL, version 2 or later 
+ *
+ * See file "COPYING"
+ * that you should have received with this program 
+ * 
+ * or visit
+ * http://www.gnu.org/copyleft/gpl.html 
+ *
+ * 
  */
 
 #include <PalmOS.h>
