@@ -1,3 +1,20 @@
+/*
+ * Tesselation 
+ *
+ * Copyright (c) 2001,2002 David Rasch <drasch@users.sourceforge.net>
+ * 
+ *
+ * Licensed under the GNU GPL, version 2 or later 
+ *
+ * See file "COPYING"
+ * that you should have received with this program 
+ * 
+ * or visit
+ * http://www.gnu.org/copyleft/gpl.html 
+ *
+ * 
+ */
+
 #include "tvertex.h"
 #include "tesselation.h"
 
@@ -19,19 +36,18 @@ void
 TVertexnodeInsert(TVertexnode_type * v1, double x1, double y1, double x2,
 		  double y2)
 {
-    // insert node after v1
-
+    /* insert a new vertex node behind v1 */
     TVertexnode_type *v2;
     v2 = TVertexnodeCreateXY(x1, y1, x2, y2, v1->next);
     v1->next = v2;
 }
 
+
 void
 TVertexnodeAdd(TVertexnode_type * rootnode, double x1, double y1,
 	       double x2, double y2)
 {
-
-    // insert node at rear
+    /* insert a new vertex node at the rear */
     TVertexnode_type *last = rootnode;
     while (last->next != NULL)
 	last = last->next;

@@ -1,5 +1,5 @@
 ICON "tesselation.pbm"
-VERSION "0.7.1"
+VERSION "1.0"
 
 FORM ID formMain AT (0 0 160 160)
 MENUID menuMain
@@ -99,7 +99,7 @@ END
 ALERT ID alertID_about 
 INFORMATION
 BEGIN
-  TITLE "About Tessellation 0.7.1"
+  TITLE "About Tessellation 1.0"
   MESSAGE "David Rasch\nmailto:drasch@users.sourceforge.net\nhttp://tesselation.sourceforge.net/"
   BUTTONS "Done"
 END

@@ -1,10 +1,27 @@
+/*
+ * Tesselation 
+ *
+ * Copyright (c) 2001,2002 David Rasch <drasch@users.sourceforge.net>
+ * 
+ *
+ * Licensed under the GNU GPL, version 2 or later 
+ *
+ * See file "COPYING"
+ * that you should have received with this program 
+ * 
+ * or visit
+ * http://www.gnu.org/copyleft/gpl.html 
+ *
+ * 
+ */
+
 #include "tesselation.h"
 #include "tesselation_main.h"
 #include "tesselation_add.h"
 #include "tfrecord.h"
-#include "tesselation_util.h"
 #include "tesselation_edit.h"
 #include "tesselation_rename.h"
+#include "tesselation_util.h"
 
 static void MainFormInit(FormPtr formP);
 static Boolean MainFormMenuHandler(EventPtr e);
@@ -91,18 +108,18 @@ static Boolean MainFormMenuHandler(EventPtr e)
 	handled = true;
 	break;
     case menuItemDelete:
-      if (DeleteFigure()) {
-	FormPtr frm = FrmGetActiveForm();
-	FigureListFill(frm);
-	FrmDrawForm(frm);
-      }
-      handled = true;
-      break;
+	if (DeleteFigure()) {
+	    FormPtr frm = FrmGetActiveForm();
+	    FigureListFill(frm);
+	    FrmDrawForm(frm);
+	}
+	handled = true;
+	break;
     case menuItemBeam:
-      BeamCurrentFigure();
-      handled=true;
-      break;
-      
+	BeamCurrentFigure();
+	handled = true;
+	break;
+
     case menuItemThanks:
 	FrmAlert(alertID_thanks);
 	handled = true;
@@ -128,14 +145,16 @@ static Boolean MainFormButtonHandler(FormPtr frm, EventPtr event)
     switch (event->data.ctlEnter.controlID) {
     case buttonNew:
 	if (DoAddFigure()) {
-	    FigureListSetSelection(frm, 0);
 	    FigureListFill(frm);
+	    currentFigure = 0;
+	    FigureListSetSelection(frm, currentFigure);
 	}
 	handled = true;
 	break;
     case buttonEdit:
 	ErrFatalDisplayIf(!CheckROMVerGreaterThan(3, 5),
 			  "You need Palm OS >= 3.5! Sorry Fred.");
+
 	if ((currentFigure != noListSelection)
 	    && (TFigurerecordGetCount() > 0)) {
 	    FrmGotoForm(formEdit);
@@ -151,10 +170,10 @@ static Boolean MainFormButtonHandler(FormPtr frm, EventPtr event)
 
 void MainFormInit(FormPtr frm)
 {
-    if (currentFigure != noListSelection)
-	FigureListSetSelection(frm, currentFigure);
+    Int16 tmpFigure = currentFigure;
     FigureListFill(frm);
-
+    if (tmpFigure != noListSelection)
+	FigureListSetSelection(frm, tmpFigure);
 
 }
 

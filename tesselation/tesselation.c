@@ -1,7 +1,7 @@
 /*
  * Tesselation 
  *
- * Copyright (c) 2001, David Rasch <drasch@xs4all.nl>
+ * Copyright (c) 2001,2002 David Rasch <drasch@users.sourceforge.net>
  * 
  *
  * Licensed under the GNU GPL, version 2 or later 
@@ -22,6 +22,7 @@
 #include "tesselation.h"
 #include "tfrecord.h"
 #include "tesselation_main.h"
+#include "tesselation_util.h"
 
 /*
  * function prototypes 
@@ -36,7 +37,7 @@ static void StopApplication(void);
  * Tesselation globals 
  */
 
-Int16 currentFigure = 0;
+Int16 currentFigure = noListSelection;
 RectangleType drawRect = { {0, 0}, {160, 160} };
 
 /*
@@ -44,17 +45,7 @@ RectangleType drawRect = { {0, 0}, {160, 160} };
  */
 static Err StartApplication(void)
 {
-    Err err;
-    // ReadPrefs();
     TFigureOpen();
-
-    //Register for notification. Unregistration only occurs when app is removed. If app is
-    //installed on top of older one, rereg does not need to occur
-    // err=ExgRegisterData (appFileCreator, exgRegExtensionID,appExgRegisterDataType );
-    /*if (err != dmErrResourceNotFound) {
-      ErrAlert(err);
-      return err;
-      }*/
     FrmGotoForm(formMain);
     return 0;
 }
@@ -65,7 +56,6 @@ static Err StartApplication(void)
 static void StopApplication(void)
 {
     TFigureClose();
-    // WritePrefs();
     FrmSaveAllForms();
     FrmCloseAllForms();
 
@@ -76,25 +66,25 @@ void AppLoadForm(UInt16 wFormID)
     FormPtr frm = FrmInitForm(wFormID);
     FrmSetActiveForm(frm);
 
-    // Set the event handler for the form.
-    // The handler of the currently active form is called by
-    // FrmHandleEvent each time it receives an event.
+    /* Set the event handler for the form.
+     * The handler of the currently active form is called by
+     * FrmHandleEvent each time it receives an event.
+     */
+
+
     switch (wFormID) {
     case formMain:
-	{
-	    FrmSetEventHandler(frm, MainFormEventHandler);
-	    break;
-	}
+	FrmSetEventHandler(frm, MainFormEventHandler);
+	break;
+
     case formEdit:
-	{
-	    FrmSetEventHandler(frm, EditFormEventHandler);
-	    break;
-	}
+	FrmSetEventHandler(frm, EditFormEventHandler);
+	break;
+
     default:
-	{
-	    break;
-	}
+	break;
     }
+
 }
 
 Boolean AppEventHandler(EventPtr event)
@@ -103,18 +93,14 @@ Boolean AppEventHandler(EventPtr event)
 
     switch (event->eType) {
     case frmLoadEvent:
-	{
-	    // Load the form resource.
+	// Load the form resource.
 
-	    AppLoadForm(event->data.frmLoad.formID);
-	    bHandled = true;
-	    break;
-	}
+	AppLoadForm(event->data.frmLoad.formID);
+	bHandled = true;
+	break;
     default:
-	{
-	    bHandled = false;
-	    break;
-	}
+	bHandled = false;
+	break;
     }
     return bHandled;
 }
@@ -125,8 +111,10 @@ UInt32 PilotMain(UInt16 cmd, MemPtr cmdPBP, UInt16 launchFlags)
 
     switch (cmd) {
     case sysAppLaunchCmdNormalLaunch:
-      ExgRegisterData(appCreator,exgRegExtensionID,
-		      appExgRegisterDataType);
+	if (CheckROMVerGreaterThan(3, 5))
+	    ExgRegisterData(appCreator, exgRegExtensionID,
+			    appExgRegisterDataType);
+
 	err = StartApplication();
 	if (err)
 	    return err;
@@ -134,18 +122,14 @@ UInt32 PilotMain(UInt16 cmd, MemPtr cmdPBP, UInt16 launchFlags)
 	StopApplication();
 	break;
     case sysAppLaunchCmdSyncNotify:
-        ExgRegisterData(appCreator,exgRegExtensionID,
-			appExgRegisterDataType);
+	if (CheckROMVerGreaterThan(3, 5))
+	    ExgRegisterData(appCreator, exgRegExtensionID,
+			    appExgRegisterDataType);
 	break;
-    case sysAppLaunchCmdExgAskUser:
-      ((ExgAskParamPtr) cmdPBP)->result = exgAskOk;
-      break;
     case sysAppLaunchCmdExgReceiveData:
-	// if our application is not active, we need to open the database
-       // the subcall flag is used to determine whether we are active.
-      err =TFigureReceive((ExgSocketPtr) cmdPBP,
-			  (launchFlags & sysAppLaunchFlagSubCall));
-      
+	err = TFigureReceive((ExgSocketPtr) cmdPBP,
+			     (launchFlags & sysAppLaunchFlagSubCall));
+
 	break;
     default:
 	break;
@@ -159,26 +143,14 @@ void AppEventLoop(void)
 
     do {
 	EvtGetEvent(&event, evtWaitForever);
-
-	// Ask system to handle event.
 	if (false == SysHandleEvent(&event)) {
-	    // System did not handle event.
-
 	    UInt16 error;
-	    // Ask Menu to handle event.
 	    if (false == MenuHandleEvent(0, &event, &error)) {
-		// Menu did not handle event.
-		// Ask App (that is, this) to handle event.
 		if (false == AppEventHandler(&event)) {
-		    // App did not handle event.
-		    // Send event to appropriate form.
 		    FrmDispatchEvent(&event);
-		}		// end if (false == AppEventHandler
-		// (&event))
-	    }			// end if (false == MenuHandleEvent (0,
-	    // &event, &error))
-	}			// end if (false == SysHandleEvent
-	// (&event))
+		}
+	    }
+	}
     }
     while (event.eType != appStopEvent);
 }

@@ -1,4 +1,20 @@
 ## Makefile for Tesselation
+#/*
+# * Tesselation 
+# *
+# * Copyright (c) 2001,2002 David Rasch <drasch@users.sourceforge.net>
+# * 
+# *
+# * Licensed under the GNU GPL, version 2 or later 
+# *
+# * See file "COPYING"
+# * that you should have received with this program 
+# * 
+# * or visit
+# * http://www.gnu.org/copyleft/gpl.html 
+# *
+# * 
+# */
 
 CC	 = m68k-palmos-g++
 CFLAGS	 = -Wall -O2 -pipe

@@ -106,6 +106,24 @@ static void FloodFill(int xx, int yy, UInt8 Col)
     }
 }
 
+
+/*
+ * Tesselation 
+ *
+ * Copyright (c) 2001,2002 David Rasch <drasch@users.sourceforge.net>
+ * 
+ *
+ * Licensed under the GNU GPL, version 2 or later 
+ *
+ * See file "COPYING"
+ * that you should have received with this program 
+ * 
+ * or visit
+ * http://www.gnu.org/copyleft/gpl.html 
+ *
+ * 
+ */
+
 void TFigureFill(TFigure_type * t1, int mode)
 {
     int x, y;
