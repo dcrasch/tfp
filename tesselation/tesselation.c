@@ -121,12 +121,29 @@ UInt32 PilotMain(UInt16 cmd, MemPtr cmdPBP, UInt16 launchFlags)
 
     AppEventLoop();
     StopApplication();
-
-  } else {
-    return sysErrParamErr;
   }
+  else if (cmd == sysAppLaunchCmdExgReceiveData) {
+    DmOpenRef dbP;
+    
+    // if our app is not active, we need to open the database
+    // The subcall flag is used to determine whether we are active
+    if (launchFlags & sysAppLaunchFlagSubCall) {
+      dbP = gCustomerDB;
+      
+      // save any data we may be editing.
+      FrmSaveAllForms();
 
-  return 0;
+      error = ReceiveSentData(dbP, (ExgSocketPtr) cmdPBP);
+    } else {
+      dbP = DmOpenDatabaseByTypeCreator(kCustomerDBType, kSalesCreator, 
+        dmModeReadWrite);
+      if (dbP) {
+        error = ReceiveSentData(dbP, (ExgSocketPtr) cmdPBP);
+      
+        DmCloseDatabase(dbP);
+      }
+    }
+  }
 }
 
 void AppEventLoop(void)

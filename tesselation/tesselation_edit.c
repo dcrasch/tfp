@@ -109,7 +109,7 @@ static void setTesselate(Boolean m)
   tesselateMode = m;
 
   if (tesselateMode) {
-    FrmSetMenu(frm, menuTesselate);
+    FrmSetMenu(frm, menuTessellate);
   } else {
     FrmSetMenu(frm, menuEdit);
   }

@@ -15,6 +15,7 @@ static void FigureListDrawFunc(UInt16 itemNum, RectanglePtr bounds,
 			       Char * data[]);
 
 static Boolean DeleteFigure(void);
+static BeamCurrentFigure(void);
 
 Boolean MainFormEventHandler(EventPtr event)
 {
@@ -58,6 +59,10 @@ static Boolean MainFormMenuHandler(EventPtr e)
 {
   Boolean handled = false;
   switch (e->data.menu.itemID) {
+  case menuItemBeam:
+    BeamCurrentFigure();
+    handled=true;
+    break;
   case menuItemRename:
     if (DoRenameFigure()) {
       FormPtr frm = FrmGetActiveForm();
@@ -161,4 +166,11 @@ static Boolean DeleteFigure(void)
     }
   }
   return false;
+}
+
+static BeamCurrentFigure(void) {
+   UInt16 choice;
+   int numFigures = TFigurerecordGetCount();
+   if ((currentFigure != noListSelection) && (currentFigure < numFigures)) {
+     TFigurerecordBeam(currentFigure);
 }

@@ -94,6 +94,7 @@ void TFigurerecordGetName(UInt16 i, char *name)
 
 void TFigureOpen(void)
 {
+  ExgRegisterData(TABLES_FILE_CREATOR,exgRegExtensionID,'tsl');
   s_dbFig = DmOpenDatabaseByTypeCreator(TABLES_DB_TYPE,
 					TABLES_FILE_CREATOR,
 					dmModeReadWrite);
@@ -344,4 +345,41 @@ UInt32 calculateFigureSize(TFigure_type * t1)
 
   size += DESCSIZE;		// description string
   return size;
+}
+
+static Err SendBytes(ExgSocketPtr s, void *buffer, UInt32 bytesToSend)
+{
+  Err err = errNone;
+  
+  while (err == errNone && bytesToSend > 0) {
+    UInt32 bytesSent = ExgSend(s, buffer, bytesToSend, &err);
+    bytesToSend -= bytesSent;
+    buffer = ((char *) buffer) + bytesSent;
+  }
+  return err;
+}
+
+
+void TFigurerecordBeam(UInt16 i)
+{
+  MemHandle hFigure;
+  Char filename[50];
+  if (!s_dbFig)
+    return 0;
+  hFigure = (MemHandle) DmQueryRecord(s_dbFig, i);
+  PackedFigure  *thePackedFigure;
+  Err       err;
+  Char      name[50];
+  
+  thePackedCustomer = (PackedFigure *) MemHandleLock(theRecord);
+  MemSet(&s, sizeof(s), 0);
+  StrNCopy(s.description, (char *) p, DESCSIZE);
+  StrPrintF(name, "%s%s", exgBeamPrefix, "figure.tsl");
+  s.name = name;
+  
+  err = ExgPut(&s);
+  if (err == errNone)
+    err = SendBytes(&s, thePackedFigure, MemHandleSize(theRecord));
+  MemHandleUnlock(theRecord);
+  err = ExgDisconnect(&s, err);
 }
