@@ -97,16 +97,15 @@ void TFigurerecordGetName(UInt16 i, char *name)
 void TFigureOpen(void)
 {
 
-  s_dbFig = DmOpenDatabaseByTypeCreator(appDatabaseType,
-					appFileCreator,
-					dmModeReadWrite);
+    s_dbFig = DmOpenDatabaseByTypeCreator(appDatabaseType,
+					  appFileCreator, dmModeReadWrite);
     if (!s_dbFig) {
-      DmCreateDatabase(0,appDatabaseName ,
-		       appFileCreator,appDatabaseType , false);
-      
-      s_dbFig = DmOpenDatabaseByTypeCreator(appDatabaseType,
-					    appFileCreator,
-					    dmModeReadWrite);
+	DmCreateDatabase(0, appDatabaseName,
+			 appFileCreator, appDatabaseType, false);
+
+	s_dbFig = DmOpenDatabaseByTypeCreator(appDatabaseType,
+					      appFileCreator,
+					      dmModeReadWrite);
 	if (!s_dbFig) {
 	    ErrFatalDisplayIf(true, "Could not open new database");
 	}
@@ -385,28 +384,31 @@ void TFigurerecordBeam(UInt16 i)
     } else {
 	ErrFatalDisplay("No such record");
     }
-    
+
 }
 
-Err TFigureReceive(ExgSocketPtr socketPtr,Boolean isAppActive)
+Err TFigureReceive(ExgSocketPtr socketPtr, Boolean isAppActive)
 {
     Err err;
     UInt16 index;
     ErrFatalDisplay("receive");
     err = ExgAccept(socketPtr);
-    if (!isAppActive) TFigureOpen();      
+    if (!isAppActive)
+	TFigureOpen();
     if (err == errNone) {
 	err = ReadIntoNewRecord(s_dbFig, socketPtr, 0xffffffff, &index);
 	err = ExgDisconnect(socketPtr, err);
     }
     if (err == errNone) {
-      DmRecordInfo(s_dbFig,index,NULL,&socketPtr->goToParams.uniqueID,NULL);
-      DmOpenDatabaseInfo(s_dbFig,&socketPtr->goToParams.dbID,
-			 NULL,NULL,&socketPtr->goToParams.dbCardNo,NULL);
-      socketPtr->goToParams.recordNum=index;
-      socketPtr->goToCreator=appFileCreator;
+	DmRecordInfo(s_dbFig, index, NULL, &socketPtr->goToParams.uniqueID,
+		     NULL);
+	DmOpenDatabaseInfo(s_dbFig, &socketPtr->goToParams.dbID, NULL,
+			   NULL, &socketPtr->goToParams.dbCardNo, NULL);
+	socketPtr->goToParams.recordNum = index;
+	socketPtr->goToCreator = appFileCreator;
     }
-    if (!isAppActive) TFigureClose();
+    if (!isAppActive)
+	TFigureClose();
     return err;
 }
 

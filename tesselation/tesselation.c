@@ -43,21 +43,23 @@ RectangleType drawRect = { {0, 0}, {160, 160} };
  */
 static Err StartApplication(void)
 {
-  Err err;
-  // ReadPrefs();
-  TFigureOpen();
-  
-  //Register for notification. Unregistration only occurs when app is removed. If app is
-  //installed on top of older one, rereg does not need to occur
-  
-  if ( (err = ExgRegisterData(appFileCreator,exgRegExtensionID,appExgRegisterDataType)) != errNone){
-    if ( err != dmErrResourceNotFound){
-      ErrAlert(err);
-      return err;
+    Err err;
+    // ReadPrefs();
+    TFigureOpen();
+
+    //Register for notification. Unregistration only occurs when app is removed. If app is
+    //installed on top of older one, rereg does not need to occur
+
+    if ((err =
+	 ExgRegisterData(appFileCreator, exgRegExtensionID,
+			 appExgRegisterDataType)) != errNone) {
+	if (err != dmErrResourceNotFound) {
+	    ErrAlert(err);
+	    return err;
+	}
     }
-  }
-  FrmGotoForm(formMain);
-  return 0;
+    FrmGotoForm(formMain);
+    return 0;
 }
 
 /*
@@ -123,27 +125,29 @@ Boolean AppEventHandler(EventPtr event)
 UInt32 PilotMain(UInt16 cmd, MemPtr cmdPBP, UInt16 launchFlags)
 {
     Err err;
-    ExgAskParamPtr pExgAskParam ;
+    ExgAskParamPtr pExgAskParam;
 
     switch (cmd) {
     case sysAppLaunchCmdNormalLaunch:
-      err = StartApplication();
-      if (err)
-	return err;      
-      AppEventLoop();
-      StopApplication();
-      break;
+	err = StartApplication();
+	if (err)
+	    return err;
+	AppEventLoop();
+	StopApplication();
+	break;
     case sysAppLaunchCmdExgAskUser:
-      pExgAskParam = (ExgAskParamPtr) cmdPBP;
-      pExgAskParam->result = exgAskOk;
-      break;       
+	pExgAskParam = (ExgAskParamPtr) cmdPBP;
+	pExgAskParam->result = exgAskOk;
+	break;
     case sysAppLaunchCmdExgReceiveData:
-      // if our application is not active, we need to open the database
-      // the subcall flag is used to determine whether we are active.
-      err = TFigureReceive((ExgSocketPtr) cmdPBP,(launchFlags & sysAppLaunchFlagSubCall));
-      break;
+	// if our application is not active, we need to open the database
+	// the subcall flag is used to determine whether we are active.
+	err =
+	    TFigureReceive((ExgSocketPtr) cmdPBP,
+			   (launchFlags & sysAppLaunchFlagSubCall));
+	break;
     default:
-      break;
+	break;
     }
     return errNone;
 }

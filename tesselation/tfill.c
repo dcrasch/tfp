@@ -35,7 +35,7 @@ static void FloodFill(int xx, int yy, UInt8 Col)
 	if (!qh) {
 	    return;
 	}
-	qst = (UInt8*)MemHandleLock(qh);
+	qst = (UInt8 *) MemHandleLock(qh);
 	MemSet(qst, qSz, 0);	//Clear the contents
 	qs = qr = qst;
 	*qs = xt = xx;

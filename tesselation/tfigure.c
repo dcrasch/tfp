@@ -73,10 +73,10 @@ void TFigureTesselate(TFigure_type * t1, int mode)
 	double rot;
 	int sx, sy;
 	double ca, sa;
-	int minx = (int)(-(t1->scale) * (t1->gridincx / 2 + t1->offx));
-	int maxx = (int)(160 + t1->scale * (t1->gridincx / 2));
-	int miny = (int)(-(t1->scale) * (t1->gridincy / 2 + t1->offy));
-	int maxy = (int)(160 + t1->scale * (t1->gridincy / 2 + t1->offy));
+	int minx = (int) (-(t1->scale) * (t1->gridincx / 2 + t1->offx));
+	int maxx = (int) (160 + t1->scale * (t1->gridincx / 2));
+	int miny = (int) (-(t1->scale) * (t1->gridincy / 2 + t1->offy));
+	int maxy = (int) (160 + t1->scale * (t1->gridincy / 2 + t1->offy));
 	WinPushDrawState();
 	WinSetClip(&(drawRect));
 	WinEraseRectangle(&(drawRect), 0);
@@ -100,14 +100,14 @@ void TFigureTesselate(TFigure_type * t1, int mode)
 		    }
 		    rot += t1->rotinc;
 		}
-		sx += (int)(t1->scale * t1->gridincx);
-		sy += (int)(t1->scale * t1->shifty);
+		sx += (int) (t1->scale * t1->gridincx);
+		sy += (int) (t1->scale * t1->shifty);
 	    }
-	    minx += (int)(t1->scale * t1->shiftx);
-	    miny += (int)(t1->scale * t1->gridincy);
+	    minx += (int) (t1->scale * t1->shiftx);
+	    miny += (int) (t1->scale * t1->gridincy);
 	    if (minx > 0) {
-		minx -= (int)(t1->scale * t1->gridincx);
-		maxy -= (int)(t1->scale * t1->shifty);
+		minx -= (int) (t1->scale * t1->gridincx);
+		maxy -= (int) (t1->scale * t1->shifty);
 	    }
 	}
 	TFigureFill(t1, mode);
@@ -126,9 +126,10 @@ Boolean TFigureMouseDown(TFigure_type * t1, int x, int y)
 	htl = t1->rootnode;
 	while (htl) {
 	    htv =
-	      TLineHit(htl, 
-		       (x - t1->offx) / t1->offscale,
-		       (y - t1->offy) / t1->offscale, (POINTSIZE / t1->offscale));
+		TLineHit(htl,
+			 (x - t1->offx) / t1->offscale,
+			 (y - t1->offy) / t1->offscale,
+			 (POINTSIZE / t1->offscale));
 	    if (!htv)
 		htv =
 		    TLineBreakAtXY(htl, (x - t1->offx) / t1->offscale,
@@ -248,15 +249,15 @@ void TFigureFit(TFigure_type * t1)
 	TLineFit(l1, &pmax, &pmin);
     }
 
-    width = abs((int)(pmax.x - pmin.x));
-    height = abs((int)(pmax.y - pmin.y));
+    width = abs((int) (pmax.x - pmin.x));
+    height = abs((int) (pmax.y - pmin.y));
 
     // calculate the scale , fit the largest
     t1->offscale = 100.0 / (width > height ? width : height);
 
     // center the figure
-    t1->offx = (int)(80 - (pmin.x + width / 2) * t1->offscale);
-    t1->offy = (int)(80 - (pmin.y + height / 2) * t1->offscale);
+    t1->offx = (int) (80 - (pmin.x + width / 2) * t1->offscale);
+    t1->offy = (int) (80 - (pmin.y + height / 2) * t1->offscale);
 
 }
 
@@ -270,6 +271,6 @@ void TFigureZoom(TFigure_type * t1, double zoom)
     } else {
 	middle = t1->sellast->p1;
     }
-    t1->offx = (int)(80 - middle.x * t1->offscale);
-    t1->offy = (int)(80 - middle.y * t1->offscale);
+    t1->offx = (int) (80 - middle.x * t1->offscale);
+    t1->offy = (int) (80 - middle.y * t1->offscale);
 }
