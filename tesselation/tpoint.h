@@ -17,7 +17,7 @@ TPoint_type TPointAddPoint(TPoint_type p1, TPoint_type p2);
 TPoint_type TPointMinusPoint(TPoint_type p1, TPoint_type p2);
 TPoint_type TPointMul(TPoint_type p1, double lambda);
 
-// TPoint_type TPointRotate(TPoint_type p1,double rot);
+TPoint_type TPointRotate(TPoint_type p1,double rot);
 double TPointRadius(TPoint_type p1);
 double TPointDistanceFromLine(TPoint_type p1, TPoint_type p2,
 			      TPoint_type p3);

@@ -25,7 +25,7 @@ static void FloodFill(int xx, int yy, UInt8 Col)
 {
     if (CheckIt(xx, yy)) {
 	//prepare memory for queue
-	void *qh;		//queue handle
+	MemHandle qh;		//queue handle
 	UInt8 *qs, *qst, *qr;	//queue save, start, read
 	UInt32 qSz = 640 * 2 * sizeof(UInt8);	//queue size (physical)
 	UInt32 qpSz = 640 * 2;	//queue size (pointer)
@@ -35,7 +35,7 @@ static void FloodFill(int xx, int yy, UInt8 Col)
 	if (!qh) {
 	    return;
 	}
-	qst = MemHandleLock(qh);
+	qst = (UInt8*)MemHandleLock(qh);
 	MemSet(qst, qSz, 0);	//Clear the contents
 	qs = qr = qst;
 	*qs = xt = xx;

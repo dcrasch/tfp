@@ -4,8 +4,8 @@
 void TPointDraw(TPoint_type p1)
 {
     RectangleType rt =
-	{ {p1.x - POINTSIZE, p1.y - POINTSIZE}, {POINTSIZE * 2 + 1,
-						 POINTSIZE * 2 + 1}
+	{ {(short int)(p1.x - POINTSIZE), (short int)(p1.y - POINTSIZE)}, 
+	  {(short int)(POINTSIZE * 2 + 1),(short int)(POINTSIZE * 2 + 1)}
     };
 
     WinDrawRectangleFrame(simpleFrame, &rt);
@@ -13,7 +13,7 @@ void TPointDraw(TPoint_type p1)
 
 void TPointDrawLine(TPoint_type p1, TPoint_type p2)
 {
-    WinDrawLine(p1.x, p1.y, p2.x, p2.y);
+    WinDrawLine((short int)p1.x, (short int)p1.y, (short int)p2.x, (short int)p2.y);
 }
 
 TPoint_type TPointAddPoint(TPoint_type p1, TPoint_type p2)

@@ -1,6 +1,6 @@
 ## Makefile for Tesselation
 
-CC	 = m68k-palmos-gcc
+CC	 = m68k-palmos-g++
 CFLAGS	 = -Wall -O2 -pipe
 PILRC	 = pilrc
 OBJRES	 = m68k-palmos-obj-res

@@ -364,40 +364,49 @@ static Err SendBytes(ExgSocketPtr s, void *buffer, UInt32 bytesToSend)
 
 void TFigurerecordBeam(UInt16 i)
 {
-    ExgSocketType sock;
+    ExgSocketType exgSock;
     MemHandle hFigure = (MemHandle) DmQueryRecord(s_dbFig, i);
     Err err;
-    Char description[DESCSIZE];
     if (hFigure) {
 	MemHandle p = (MemHandle) MemHandleLock(hFigure);
 	if (!p)
 	    ErrFatalDisplay("Could not get handle");
 
-	MemSet(&sock, sizeof(sock), 0);
-	StrNCopy(description, (Char *) p, DESCSIZE);
-	sock.description = description;
-	sock.name = appExgName;
-	err = ExgPut(&sock);
+	MemSet(&exgSock, sizeof(ExgSocketType), 0);
+	exgSock.description = appExgDescription;
+	exgSock.name = appExgName;
+
+	err = ExgPut(&exgSock);
 	if (err == errNone)
-	    err = SendBytes(&sock, p, MemHandleSize(hFigure));
+	    err = SendBytes(&exgSock, p, MemHandleSize(hFigure));
 	MemHandleUnlock(hFigure);
 	//DmReleaseRecord(s_dbFig, i, false);
-	err = ExgDisconnect(&sock, err);
+	err = ExgDisconnect(&exgSock, err);
     } else {
 	ErrFatalDisplay("No such record");
     }
+    
 }
 
-Err TFigureReceive(ExgSocketPtr socketPtr)
+Err TFigureReceive(ExgSocketPtr socketPtr,Boolean isAppActive)
 {
     Err err;
     UInt16 index;
     ErrFatalDisplay("receive");
     err = ExgAccept(socketPtr);
+    if (!isAppActive) TFigureOpen();      
     if (err == errNone) {
 	err = ReadIntoNewRecord(s_dbFig, socketPtr, 0xffffffff, &index);
 	err = ExgDisconnect(socketPtr, err);
     }
+    if (err == errNone) {
+      DmRecordInfo(s_dbFig,index,NULL,&socketPtr->goToParams.uniqueID,NULL);
+      DmOpenDatabaseInfo(s_dbFig,&socketPtr->goToParams.dbID,
+			 NULL,NULL,&socketPtr->goToParams.dbCardNo,NULL);
+      socketPtr->goToParams.recordNum=index;
+      socketPtr->goToCreator=appFileCreator;
+    }
+    if (!isAppActive) TFigureClose();
     return err;
 }
 

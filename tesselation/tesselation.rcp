@@ -24,7 +24,6 @@ MENU ID menuMain
 BEGIN
   PULLDOWN "Figure"
   BEGIN
-    MENUITEM "Beam" ID menuItemBeam "R"
     MENUITEM "Rename" ID menuItemRename "R"
     MENUITEM "Delete" ID menuItemDelete "D"
   END

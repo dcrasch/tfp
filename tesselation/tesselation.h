@@ -4,11 +4,12 @@
 #include "tfigure.h"
 #include "tesselation_resource.h"
 
-#define appFileCreator 'DCRP'
-#define appExgName "_beam:tesselation.tsl"
-#define appExgRegisterDataType "TSL"
-#define appDatabaseName "FigureDB"
-#define appDatabaseType 'Data'
+#define appFileCreator         'DCRP'
+#define appExgName             "_beam:tesselation.CST"
+#define appExgDescription      "Tesselation figure"
+#define appExgRegisterDataType "CST"
+#define appDatabaseName        "FigureDB"
+#define appDatabaseType        'Data'
 
 // eventhandlers
 
@@ -18,7 +19,7 @@
 extern Boolean MainFormEventHandler(EventPtr e);
 extern Boolean EditFormEventHandler(EventPtr e);
 
-extern UInt16 currentFigure;
+extern Int16 currentFigure;
 extern RectangleType drawRect;
 
 #endif
