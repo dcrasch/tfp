@@ -2,6 +2,7 @@
 #include "tfigure.h"
 #include "tfrecord.h"
 #include "tesselation_add.h"
+#include "tesselation_edit.h"
 
 static Boolean theMouseDown = false;
 static int tesselateMode = false;

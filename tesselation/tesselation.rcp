@@ -8,9 +8,8 @@ MENUID menuMain
 BEGIN
   TITLE "Tesselation"
   LIST "<EMPTY>" ID listFigure AT (0 15 160 121) FONT 0 VISIBLEITEMS 11
-  BUTTON "New" ID buttonNew AT (20 145 AUTO AUTO)
+  BUTTON "New" ID buttonNew AT (25 145 AUTO AUTO)
   BUTTON "Edit" ID buttonEdit AT (PREVRIGHT+10 145 AUTO AUTO)
-  BUTTON "Delete" ID buttonDelete AT (PREVRIGHT+10 145 AUTO AUTO)
 END
 
 FORM ID formEdit AT (0 0 160 160)
@@ -25,10 +24,12 @@ END
 
 MENU ID menuMain
 BEGIN
-
+ 
   PULLDOWN "Figure"
   BEGIN
-    MENUITEM "New" ID buttonNew "N"
+    MENUITEM "Beam" ID menuItemBeam "B"
+    MENUITEM "Rename" ID menuItemRename "R"
+    MENUITEM "Delete" ID menuItemDelete "D"
   END
 
   PULLDOWN "Help"
@@ -45,15 +46,17 @@ BEGIN
   BEGIN
     MENUITEM "B/W"	 ID menuItemTesselateBW   "B"
     MENUITEM "Gray"      ID menuItemTesselateGray "G"
-    MENUITEM "Color"	 ID menuItemTesselate     "T"
+    MENUITEM "Color"	 ID menuItemTesselate     "C"
     
-    MENUITEM "Done" 	 ID menuItemEDone   "D"
+    MENUITEM "Done" 	 ID menuItemEDone   	  "D"
   END
 
   PULLDOWN "Edit"
   BEGIN
-    MENUITEM "Remove" ID menuItemRemove     "R"
-    MENUITEM "Fit"    ID menuItemFit        "F"
+    MENUITEM "Remove"	 ID menuItemRemove        "R"
+    MENUITEM "Fit"    	 ID menuItemFit           "F"
+    MENUITEM "Zoom In" 	 ID menuItemZoomIn	  "I"
+    MENUITEM "Zoom Out"	 ID menuItemZoomOut	  "O"
   END
 END
 
@@ -68,8 +71,8 @@ BEGIN
     MENUITEM "Edit"      ID menuItemEdit   "E"
     MENUITEM "Done" 	 ID menuItemEDone  "D"
   END
-
 END
+
 FORM ID formAddFigure AT (2 88 156 70) 
 MODAL
 BEGIN
@@ -82,6 +85,17 @@ BEGIN
   POPUPLIST triggerFigure listBaseFigures
   BUTTON "Ok" ID buttonAFOK AT (3 51 AUTO AUTO)
   BUTTON "Cancel" ID buttonAFCancel AT (PREVRIGHT+5 PREVTOP AUTO AUTO)
+  GRAFFITISTATEINDICATOR AT (RIGHT@143 BOTTOM@65)
+END
+
+FORM ID formRenameFigure AT (2 88 156 70) 
+MODAL
+BEGIN
+  TITLE "Rename Figure"
+  LABEL "Name:" AUTOID AT (5 14) FONT 0
+  FIELD ID fieldFigureName AT (PREVRIGHT+6 PREVTOP 70 11) FONT 0 UNDERLINED MAXCHARS 20	
+  BUTTON "Ok" ID buttonRFOK AT (3 51 AUTO AUTO)
+  BUTTON "Cancel" ID buttonRFCancel AT (PREVRIGHT+5 PREVTOP AUTO AUTO)
   GRAFFITISTATEINDICATOR AT (RIGHT@143 BOTTOM@65)
 END
 
@@ -105,7 +119,7 @@ ALERT ID alertID_thanks
 INFORMATION
 BEGIN
   TITLE "Thanks"
-  MESSAGE "Thanks to Fred, Gerald, Stefan, Bas and René."
+  MESSAGE "Thanks to Fred, Gerald, Stefan, Bas, René and Andrew."
   BUTTONS "Done"
 END
 
@@ -129,7 +143,8 @@ ALERT ID alertID_selection
 INFORMATION
 BEGIN
   TITLE "No point selected!"
-  MESSAGE "Click inside the square, after that select remove"
-   BUTTONS "OK"
-END  
+  MESSAGE "To select a point Click inside the square."
+  BUTTONS "OK"
+END
+
 

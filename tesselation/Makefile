@@ -13,7 +13,7 @@ APPID   = "TeAp"
 VERSION = 0.5.4
 RESDIR  = .
 
-SRC = tpoint.c tvertex.c tline.c tfigure.c tfill.c TinyTrig.c tfrecord.c tesselation.c tesselation_main.c tesselation_add.c tesselation_edit.c tesselation_util.c
+SRC = tpoint.c tvertex.c tline.c tfigure.c tfill.c TinyTrig.c tfrecord.c tesselation.c tesselation_main.c tesselation_add.c tesselation_edit.c tesselation_util.c tesselation_rename.c
 
 OBJS = $(SRC:.c=.o)
 BITMAPS = $(RESDIR)/$(TARGET).pbm

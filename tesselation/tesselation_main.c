@@ -3,6 +3,8 @@
 #include "tesselation_add.h"
 #include "tfrecord.h"
 #include "tesselation_util.h"
+#include "tesselation_edit.h"
+#include "tesselation_rename.h"
 
 static void MainFormInit(FormPtr formP);
 static Boolean MainFormMenuHandler(EventPtr e);
@@ -56,6 +58,22 @@ static Boolean MainFormMenuHandler(EventPtr e)
 {
   Boolean handled = false;
   switch (e->data.menu.itemID) {
+  case menuItemRename:
+    if (DoRenameFigure()) {
+      FormPtr frm = FrmGetActiveForm();
+      FigureListFill(frm);
+      FrmDrawForm(frm);
+    }
+    handled = true;
+    break;
+  case menuItemDelete:
+    if (DeleteFigure()) {
+      FormPtr frm = FrmGetActiveForm();
+      FigureListFill(frm);
+      FrmDrawForm(frm);
+    }
+    handled = true;
+    break;
   case menuItemThanks:
     FrmAlert(alertID_thanks);
     handled = true;
@@ -80,37 +98,23 @@ static Boolean MainFormButtonHandler(FormPtr frm, EventPtr event)
   Boolean handled = false;
   switch (event->data.ctlEnter.controlID) {
   case buttonNew:
-    {
-      if (DoAddFigure()) {
-	FigureListFill(frm);
-      }
-      handled = true;
-      break;
+    if (DoAddFigure()) {
+      FigureListFill(frm);
     }
+    handled = true;
+    break;
   case buttonEdit:
-    {
-      ErrFatalDisplayIf(!CheckROMVerGreaterThan(3, 5),
-			"You need Palm OS >= 3.5! Sorry Fred.");
-      if ((currentFigure != noListSelection)
-	  && (TFigurerecordGetCount() > 0)) {
-	FrmGotoForm(formEdit);
-      }
-      handled = true;
-      break;
+    ErrFatalDisplayIf(!CheckROMVerGreaterThan(3, 5),
+		      "You need Palm OS >= 3.5! Sorry Fred.");
+    if ((currentFigure != noListSelection)
+	&& (TFigurerecordGetCount() > 0)) {
+      FrmGotoForm(formEdit);
     }
-  case buttonDelete:
-    {
-      if (DeleteFigure()) {
-	FigureListFill(frm);
-	FrmDrawForm(frm);
-      }
-      handled = true;
-    }
+    handled = true;
+    break;
   default:
-    {
-      handled = false;
-      break;
-    }
+    handled = false;
+    break;
   }
   return handled;
 }

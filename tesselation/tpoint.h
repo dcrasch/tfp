@@ -23,7 +23,7 @@ double TPointDistanceFromLine(TPoint_type p1, TPoint_type p2,
 			      TPoint_type p3);
 double TPointDistanceFromPoint(TPoint_type p1, TPoint_type p2);
 double TPointDistanceFromXY(TPoint_type p1, double x, double y);
-Boolean TPointHitXY(TPoint_type p1, double hx, double hy);
+Boolean TPointHitXY(TPoint_type p1, double hx, double hy, double ps);
 
 // not sure about this one
 #define sqr(x) (x*x)

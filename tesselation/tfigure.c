@@ -117,11 +117,12 @@ Boolean TFigureMouseDown(TFigure_type * t1, int x, int y)
     while (htl) {
       htv =
 	  TLineHit(htl, (x - t1->offx) / t1->offscale,
-		   (y - t1->offy) / t1->offscale);
+		   (y - t1->offy) / t1->offscale, 5 * t1->offscale);
       if (!htv)
 	htv =
 	    TLineBreakAtXY(htl, (x - t1->offx) / t1->offscale,
-			   (y - t1->offy) / t1->offscale);
+			   (y - t1->offy) / t1->offscale,
+			   5 * t1->offscale);
       if (htv) {
 	t1->selline = htl;
 	t1->selvertex = htv;

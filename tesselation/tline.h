@@ -20,8 +20,10 @@ TLinenode_type *TLinenodeCreateXY(double x1, double y1,
 
 void TLinenodeFree(TLinenode_type * l1);
 
-TVertexnode_type *TLineBreakAtXY(TLinenode_type * l1, double x, double y);
-TVertexnode_type *TLineHit(TLinenode_type * l1, double x, double y);
+TVertexnode_type *TLineBreakAtXY(TLinenode_type * l1, double x, double y,
+				 double ps);
+TVertexnode_type *TLineHit(TLinenode_type * l1, double x, double y,
+			   double ps);
 
 void TLineDraw(TLinenode_type l1, int x, int y, double scale);
 void TLineTesselate(TLinenode_type l1, int x, int y,

@@ -1,95 +1,138 @@
 #include "tfill.h"
 
-// only for palm os 3.5
-// can not fill the whole screen!
-// use a stack!!
+/* 
+   Author: andrew@drawit.co.nz
+   www   : http://www.drawit.co.nz/
+*/
 
-static int isWhite(int x, int y)
+static Boolean CheckIt(int x, int y)
 {
   // inside figure rectangle 
   // stupid function returns zero if outside window!
   if ((x < 0) || (x > 159) || (y < 0) || (y > 159))
-    return 0;
-  if (WinGetPixel(x, y) == 0)
-    return 1;
-  else
-    return 0;
+    return false;
+
+  return (WinGetPixel(x, y) == 0);
 }
 
-// scan left for the edge of the screen or index=0
-static int scanleft(int x, int y)
-{
-  while (isWhite(x, y))
-    x--;
-  return x + 1;
-}
+/* A diamond flood-fill using a circular queue system.
+ Each pixel surrounding the current pixel is added to
+ the queue if it meets the criteria, then is retrieved in
+ its turn. In theory, the most pixels in the queue should
+ be 640 on the pilot screen */
 
-static int scanright(int x, int y)
+static void FloodFill(int xx, int yy, UInt8 Col)
 {
-  while (isWhite(x, y))
-    x++;
-  return x - 1;
-}
+  if (CheckIt(xx, yy)) {
+    //prepare memory for queue
+    void *qh;			//queue handle
+    UInt8 *qs, *qst, *qr;	//queue save, start, read
+    UInt32 qSz = 640 * 2 * sizeof(UInt8);	//queue size (physical)
+    UInt32 qpSz = 640 * 2;	//queue size (pointer)
+    int xt, yt;			//temporary x and y locations
 
-static void recfill(int x1, int x2, int y, int d)
-{
-  int x = x1;
-  int lx, rx;
-  int ny = y + d;
-  WinDrawLine(x1, y, x2, y);
-  while (x <= x2) {
-    if (isWhite(x, ny)) {
-      lx = scanleft(x, ny);
-      rx = scanright(x, ny);
-      recfill(lx, rx, ny, d);
-      if (lx < x1)
-	recfill(lx, x1 - 1, ny, -d);
-      if (rx > x2)
-	recfill(x2 + 1, rx, ny, -d);
-      x = rx;
+    qh = MemHandleNew(qSz);
+    if (!qh) {
+      return;
     }
-    x++;
+    qst = MemHandleLock(qh);
+    MemSet(qst, qSz, 0);	//Clear the contents
+    qs = qr = qst;
+    *qs = xt = xx;
+    qs++;
+    *qs = yt = yy;
+    qs++;
+
+    WinSetForeColor(Col);
+    WinDrawPixel(xt, yt);
+
+    //Main queue loop
+    while (qr != qs) {
+      //Add new members to queue
+      //Above current pixel
+      if (CheckIt(xt, yt - 1)) {
+	*qs = xt;
+	qs++;
+	*qs = yt - 1;
+	qs++;
+	WinDrawPixel(xt, yt - 1);
+	if (qs >= (qst + qpSz))
+	  qs = qst;		//Loop back to beginning of queue
+      }
+      //Below current pixel
+      if (CheckIt(xt, yt + 1)) {
+	*qs = xt;
+	qs++;
+	*qs = yt + 1;
+	qs++;
+	WinDrawPixel(xt, yt + 1);
+	if (qs >= (qst + qpSz)) {
+	  qs = qst;
+	}
+      }
+      //Left of current pixel
+      if (CheckIt(xt - 1, yt)) {
+	*qs = xt - 1;
+	qs++;
+	*qs = yt;
+	qs++;
+	WinDrawPixel(xt - 1, yt);
+	if (qs >= (qst + qpSz)) {
+	  qs = qst;
+	}
+      }
+      //Right of current pixel
+      if (CheckIt(xt + 1, yt)) {
+	*qs = xt + 1;
+	qs++;
+	*qs = yt;
+	qs++;
+	WinDrawPixel(xt + 1, yt);
+	if (qs >= (qst + qpSz))
+	  qs = qst;
+      }
+      //Retrieve current queue member
+      qr += 2;
+      if (qr >= (qst + qpSz)) {
+	qr = qst;		//Loop back to the beginning
+      }
+      xt = *qr;
+      yt = *(qr + 1);
+    }				//Back to beginning of loop
+
+    //Free the memory
+    MemHandleUnlock(qh);
+    MemHandleFree(qh);
   }
 }
 
-/*
- * generic fill function void tfill(int x,int y) { if (isWhite(x,y)) { int 
- * lx=scanleft(x,y); int rx=scanright(x,y); recfill(lx,rx,y,-1);
- * recfill(lx,rx,y,1); } }
- * 
- */
-
 void TFigureFill(TFigure_type * t1, int mode)
 {
-  int lx, rx, y;
+  int x, y;
   UInt32 depth;
+  UInt8 c = 1;
   WinScreenMode(winScreenModeGet, 0, 0, &depth, 0);
 
   if ((mode != 0) && (depth > 1)) {
     for (y = 0; y < 160; y++) {
-      rx = 0;
-      while (rx < 160) {
-	if (isWhite(rx, y)) {
-	  lx = rx;
-	  rx = scanright(rx, y);	// skip right 
-	  if (mode == 1) {
-	    if (depth >= 8) {
-	      WinSetForeColor(SysRandom(0) % 11 + 215);
-	    }
-	    if (depth == 4) {
-	      WinSetForeColor(SysRandom(0) % 14 + 1);
-	    }
-	    if (depth == 2) {
-	      WinSetForeColor(SysRandom(0) % 2 + 1);
-	    }
-	  }
+      for (x = 0; x < 160; x++) {
 
-	  if (mode == 2) {
-	    WinSetForeColor(SysRandom(0) % 200 + 1);
+	if (mode == 1) {
+	  if (depth >= 8) {
+	    c = SysRandom(0) % 11 + 215;
 	  }
-	  recfill(lx, rx, y, 1);
+	  if (depth == 4) {
+	    c = SysRandom(0) % 14 + 1;
+	  }
+	  if (depth == 2) {
+	    c = SysRandom(0) % 2 + 1;
+	  }
 	}
-	rx++;
+
+	if (mode == 2) {
+	  c = SysRandom(0) % 200 + 1;
+	}
+	FloodFill(x, y, c);
       }
     }
   }

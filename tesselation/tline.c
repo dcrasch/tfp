@@ -1,7 +1,8 @@
 #include "TinyTrig.h"
 #include "tline.h"
 
-TVertexnode_type *TLineBreakAtXY(TLinenode_type * l1, double x, double y)
+TVertexnode_type *TLineBreakAtXY(TLinenode_type * l1, double x, double y,
+				 double ps)
 {
   TVertexnode_type *otv = l1->rootnode;
   TPoint_type pm = { x, y };
@@ -11,8 +12,7 @@ TVertexnode_type *TLineBreakAtXY(TLinenode_type * l1, double x, double y)
   l1->corrp = false;
   while (otv->next != NULL) {
 
-    if (_abs(TPointDistanceFromLine(pm, otv->p1, otv->next->p1)) <
-	POINTSIZE) {
+    if (_abs(TPointDistanceFromLine(pm, otv->p1, otv->next->p1)) < ps) {
 
       len = TPointDistanceFromPoint(otv->p1, otv->next->p1);
       if ((TPointDistanceFromPoint(pm, otv->p1) < len) &&
@@ -27,8 +27,7 @@ TVertexnode_type *TLineBreakAtXY(TLinenode_type * l1, double x, double y)
       }
     }
 
-    if (_abs(TPointDistanceFromLine(pm, otv->p2, otv->next->p2)) <
-	POINTSIZE) {
+    if (_abs(TPointDistanceFromLine(pm, otv->p2, otv->next->p2)) < ps) {
       len = TPointDistanceFromPoint(otv->p2, otv->next->p2);
       if ((TPointDistanceFromPoint(pm, otv->p2) < len) &&
 	  (TPointDistanceFromPoint(pm, otv->next->p2) < len)) {
@@ -47,7 +46,8 @@ TVertexnode_type *TLineBreakAtXY(TLinenode_type * l1, double x, double y)
   return NULL;
 }
 
-TVertexnode_type *TLineHit(TLinenode_type * l1, double x, double y)
+TVertexnode_type *TLineHit(TLinenode_type * l1, double x, double y,
+			   double ps)
 {
   TVertexnode_type *htv = l1->rootnode;
   // don't hit on rootnode;
@@ -59,10 +59,10 @@ TVertexnode_type *TLineHit(TLinenode_type * l1, double x, double y)
   // don't hit on lastnode
   while (htv->next) {
     l1->corrp = false;
-    if (TPointHitXY(htv->p1, x, y)) {
+    if (TPointHitXY(htv->p1, x, y, ps)) {
       return htv;
     }
-    if (TPointHitXY(htv->p2, x, y)) {
+    if (TPointHitXY(htv->p2, x, y, ps)) {
       l1->corrp = true;
       return htv;
     }
