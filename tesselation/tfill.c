@@ -59,19 +59,27 @@ static void recfill(int x1, int x2, int y, int d)
  * 
  */
 
-void TFigureFill(TFigure_type * t1)
+void TFigureFill(TFigure_type * t1,int mode)
 {
     int lx, rx, y;
-    for (y = 0; y < 160; y++) {
+    if (mode!=0) {
+      for (y = 0; y < 160; y++) {
 	rx = 0;
 	while (rx < 160) {
-	    if (isWhite(rx, y)) {
-		lx = rx;
-		rx = scanright(rx, y);	// skip right 
-		WinSetForeColor(SysRandom(0) % 200 + 1);
-		recfill(lx, rx, y, 1);
+	  if (isWhite(rx, y)) {
+	    lx = rx;
+	    rx = scanright(rx, y);	// skip right 
+	    if (mode==1) {
+	      WinSetForeColor(SysRandom(0)%10+215);
 	    }
-	    rx++;
+	    
+	    if (mode==2) {
+	      WinSetForeColor(SysRandom(0)%220+1);
+	    }
+	    recfill(lx, rx, y, 1);
+	  }
+	  rx++;
 	}
+      }
     }
 }

@@ -33,7 +33,7 @@ void TFigureRemovePoint(TFigure_type * t1);
 
 void TFigureDraw(TFigure_type * t1);
 void TFigureRedraw(TFigure_type * t1);
-void TFigureTesselate(TFigure_type * t1, Boolean color);
+void TFigureTesselate(TFigure_type * t1, int mode);
 
 Boolean TFigureMouseDown(TFigure_type * t1, int x, int y);
 Boolean TFigureMouseDrag(TFigure_type * t1, int x, int y);

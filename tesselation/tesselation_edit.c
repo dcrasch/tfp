@@ -103,17 +103,26 @@ static Boolean EditFormMenuHandler(EventPtr event)
 {
     Boolean handled = false;
     switch (event->data.menu.itemID) {
-    case menuItemTesselate:
 
-	tesselateMode = true;
-	if (my_figure)
-	    TFigureTesselate(my_figure, true);
-	handled = true;
-	break;
+
     case menuItemTesselateBW:
 	tesselateMode = true;
 	if (my_figure)
-	    TFigureTesselate(my_figure, false);
+	    TFigureTesselate(my_figure, 0);
+	handled = true;
+	break;
+
+    case menuItemTesselateGray:
+	tesselateMode = true;
+	if (my_figure)
+	    TFigureTesselate(my_figure, 1);
+	handled = true;
+	break;
+
+    case menuItemTesselate:
+	tesselateMode = true;
+	if (my_figure)
+	    TFigureTesselate(my_figure,2);
 	handled = true;
 	break;
 

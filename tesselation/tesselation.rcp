@@ -43,8 +43,11 @@ MENU ID menuEdit
 BEGIN  
   PULLDOWN "Tesselation"
   BEGIN
-    MENUITEM "Color"	 ID menuItemTesselate
-    MENUITEM "B/W"	 ID menuItemTesselateBW
+  MENUITEM "B/W"	 ID menuItemTesselateBW
+  MENUITEM "Gray"      	 ID menuItemTesselateGray	
+  MENUITEM "Color"	 ID menuItemTesselate
+    
+  
     MENUITEM "Edit"      ID menuItemEdit
     MENUITEM "Done" 	 ID menuItemEDone
   END
