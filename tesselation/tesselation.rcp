@@ -71,7 +71,7 @@ END
 ALERT ID alertID_about INFORMATION
 BEGIN
   TITLE "About Tesselation"
-  MESSAGE "Copyright (c) 2000 David Rasch drasch@science.uva.nl GNU GPL http://gnu.org/copyleft/gnu.html"
+  MESSAGE "Copyright (c) 2000 David Rasch drasch@user.sourceforge.net GNU GPL http://gnu.org/copyleft/gnu.html"
   BUTTONS "Done"
 END
 

@@ -49,10 +49,10 @@ static Boolean EditFormScreenHandler(EventPtr event)
 	switch (event->eType) {
 	case penDownEvent:
 	    if (!theMouseDown) {
-		if (TFigureMouseDown
-		    (my_figure, event->screenX, event->screenY))
-		    TFigureRedraw(my_figure);
-		handled = true;
+	      if (TFigureMouseDown(my_figure, event->screenX, event->screenY)) {
+		TFigureRedraw(my_figure);
+	      }
+	         handled = true;
 		theMouseDown = true;
 	    }
 	    break;
@@ -77,16 +77,19 @@ static Boolean EditFormScreenHandler(EventPtr event)
 
 static void EditFormInit(FormPtr frm)
 {
-  if (my_figure) {
-    TFigureFree(my_figure);
+    if (my_figure) {
+	TFigureFree(my_figure);
+    }
     my_figure = TFigurerecordGet(currentFigure);
-    ErrFatalDisplayIf(!my_figure, "Could not get record");
-
+    
+    
+    ErrFatalDisplayIf(!my_figure, currentFigure);
+    
     theMouseDown = false;
     tesselateMode = false;
-    if (my_figure)
-	TFigureRedraw(my_figure);
-  }
+    if (my_figure) {
+      TFigureRedraw(my_figure);
+    }
 }
 
 static void EditFormDone()
@@ -101,45 +104,45 @@ static Boolean EditFormMenuHandler(EventPtr event)
     Boolean handled = false;
     switch (event->data.menu.itemID) {
     case menuItemTesselate:
-      
-      tesselateMode = true;
-      if (my_figure)
-	TFigureTesselate(my_figure, true);
-      handled = true;
-      break;
+
+	tesselateMode = true;
+	if (my_figure)
+	    TFigureTesselate(my_figure, true);
+	handled = true;
+	break;
     case menuItemTesselateBW:
-      tesselateMode = true;
-      if (my_figure)
-	TFigureTesselate(my_figure, false);
-      handled = true;
-      break;
-      
+	tesselateMode = true;
+	if (my_figure)
+	    TFigureTesselate(my_figure, false);
+	handled = true;
+	break;
+
     case menuItemEdit:
-      
-      tesselateMode = false;
-      if (my_figure)
-	TFigureRedraw(my_figure);
-      handled = true;
-      break;
-      
+
+	tesselateMode = false;
+	if (my_figure)
+	    TFigureRedraw(my_figure);
+	handled = true;
+	break;
+
     case menuItemRemove:
-      
-      if (removePoint()) {
-	TFigureRedraw(my_figure);
-      }
-      handled = true;
-      break;
-      
+
+	if (removePoint()) {
+	    TFigureRedraw(my_figure);
+	}
+	handled = true;
+	break;
+
     case menuItemEDone:
-      
-      handled = true;
-      EditFormDone();
-      break;
-      
+
+	handled = true;
+	EditFormDone();
+	break;
+
     default:
-      handled = false;
-      break;
-      
+	handled = false;
+	break;
+
     }
     return handled;
 }

@@ -86,8 +86,8 @@ static Boolean MainFormButtonHandler(FormPtr frm, EventPtr event)
     case buttonEdit:
 	{
 	    ErrFatalDisplayIf(!CheckROMVerGreaterThan(3, 5),
-			      "You need Palm OS >= 3.5");
-	    if (TFigurerecordGetCount() > 0) {
+			      "You need Palm OS >= 3.5! Sorry Fred.");
+	    if ((currentFigure!=noListSelection) && (TFigurerecordGetCount() > 0)){
 		FrmGotoForm(formEdit);
 	    }
 	    handled = true;
@@ -131,16 +131,18 @@ static void
 FigureListDrawFunc(UInt16 itemNum, RectanglePtr bounds, Char * data[])
 {
     char currFigure[DESCSIZE];
-    TFigurerecordGetName(itemNum, currFigure);
-    WinDrawChars(currFigure, StrLen(currFigure), bounds->topLeft.x + 6,
-		 bounds->topLeft.y);
+    if (currentFigure!=noListSelection) {
+      TFigurerecordGetName(itemNum, currFigure);
+      WinDrawChars(currFigure, StrLen(currFigure), bounds->topLeft.x + 6,
+		   bounds->topLeft.y);
+    }
 }
 
 static Boolean DeleteFigure(void)
 {
     UInt16 choice;
     int numFigures = TFigurerecordGetCount();
-    if (currentFigure < numFigures) {
+    if ((currentFigure!=noListSelection) && (currentFigure < numFigures)) {
 	char currFigure[DESCSIZE];
 	TFigurerecordGetName(currentFigure, currFigure);
 	choice = FrmCustomAlert(alertID_delete, currFigure, NULL, NULL);
