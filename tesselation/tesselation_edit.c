@@ -21,8 +21,9 @@
 #include "tesselation_add.h"
 #include "tesselation_edit.h"
 
-static Boolean theMouseDown = false;
+
 static int tesselateMode = false;
+static Boolean theMouseDown = false;
 static TFigure_type *my_figure = NULL;
 
 static Boolean EditFormMenuHandler(EventPtr event);
@@ -107,7 +108,7 @@ static void EditFormInit(FormPtr frm)
     ErrFatalDisplayIf(!my_figure, "Could not open figure");
 
     theMouseDown = false;
-    setTesselate(false);
+    setTesselate(tesselateMode);
     TFigureFit(my_figure);
 
     if (my_figure) {

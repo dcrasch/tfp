@@ -62,6 +62,7 @@ Boolean MainFormEventHandler(EventPtr event)
     case lstSelectEvent:
 	currentFigure = event->data.lstSelect.selection;
 	handled = true;
+	break;
     case keyDownEvent:
 	{
 	    FormPtr frm = FrmGetActiveForm();
@@ -157,7 +158,7 @@ static Boolean MainFormButtonHandler(FormPtr frm, EventPtr event)
 
 	if ((currentFigure != noListSelection)
 	    && (TFigurerecordGetCount() > 0)) {
-	    FrmGotoForm(formEdit);
+	  FrmGotoForm(formEdit);
 	}
 	handled = true;
 	break;

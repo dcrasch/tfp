@@ -59,5 +59,8 @@ clean:
 distclean: clean
 	-rm -f $(TARGET).prc
 
+docs:
+	doxygen
+
 depends:
 	makedepend -Y../common $(SRC) >/dev/null 2>&1

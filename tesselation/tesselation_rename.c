@@ -32,6 +32,7 @@ Boolean DoRenameFigure(void)
 							FrmGetObjectIndex
 							(frm,
 							 fieldFigureName));
+	    MemHandle oldhText=FldGetTextHandle(field);
 	    MemHandle hText = MemHandleNew(DESCSIZE);
 	    char *titleptr = (char *) MemHandleLock(hText);
 	    StrNCopy(titleptr, t1->name, DESCSIZE);
@@ -39,6 +40,9 @@ Boolean DoRenameFigure(void)
 
 	    MemPtrUnlock(titleptr);
 	    FldSetTextHandle(field, (MemHandle) hText);
+	    if (oldhText!=NULL) {
+	      MemHandleFree(oldhText);
+	    }
 
 	    if (FrmDoDialog(frm) == buttonRFOK) {
 		hText = FldGetTextHandle(field);
