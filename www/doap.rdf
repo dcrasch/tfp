@@ -6,7 +6,7 @@
   <doap:Project>
     <doap:name>tessellation</doap:name>
     <doap:shortname>tessellation</doap:shortname>
-    <doap:homepage rdf:resource="tesselation.sourceforge.net"/>
+    <doap:homepage rdf:resource="http://tesselation.sourceforge.net/"/>
     <doap:created>2001-08-22</doap:created>
     <doap:description>Tessellation lets you create nice colorful tilings like Escher with 8 basic figures.</doap:description>
     <doap:shortdesc>Create nice colorful tilings.</doap:shortdesc>
